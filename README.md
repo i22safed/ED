@@ -1,2 +1,4 @@
-# ED
-Prácticas de Estructuras de Datos 18/19
+# Estructuras de Datos
+
+## Práctica 1. Monomios de una variable 
+## Práctica 2. Polinomios 
