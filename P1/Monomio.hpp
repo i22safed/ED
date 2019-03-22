@@ -1,3 +1,22 @@
+
+/*
+
+	Comentario de la práctica 
+
+	+ El operador de flujo de entrada no debería pedir por pantalla los datos al usuario. Se recuerda que este operador también se puede usar con ficheros.
+	+ La gráfica que genera podría haber mostrado los datos para valores de X con incrementos de 0.1 o menor.
+	+ El operador de asignación debe comprobar que el objeto actual no es igual que el objeto que se va a asignar.
+	+ La función leerMonomio puede ser más amigable indicando que no se puede introducir un grado negativo.
+
+
+
+
+
+
+*/
+
+
+
 /*! 
 	\file Monomio.hpp
 	\brief Definición de la clase Monomio
