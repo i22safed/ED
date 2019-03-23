@@ -6,18 +6,13 @@
 
 // Ficheros de cabecera
 #include <iostream>
-
 #include "Polinomio.hpp"
 
 // Operadores de asignación
 
-// COMPLETAR
-
-
 /////////////////////////////////////////////////////////////
 
-ed::Polinomio & ed::Polinomio::operator=(Polinomio const &p)
-{
+ed::Polinomio & ed::Polinomio::operator=(Polinomio const &p){
 	
 	#ifndef NDEBUG 
 		assert(!sonIguales(p));
@@ -37,8 +32,7 @@ ed::Polinomio & ed::Polinomio::operator=(Polinomio const &p)
 }
 
 
-ed::Polinomio & ed::Polinomio::operator=(ed::Monomio const &m)
-{
+ed::Polinomio & ed::Polinomio::operator=(ed::Monomio const &m){
 	
 	this->polinomio_[0].setCoeficiente(m.getCoeficiente());
 	this->polinomio_[0].setGrado(m.getGrado());
@@ -53,8 +47,7 @@ ed::Polinomio & ed::Polinomio::operator=(ed::Monomio const &m)
 }
 
 
-ed::Polinomio & ed::Polinomio::operator=(double const &x)
-{
+ed::Polinomio & ed::Polinomio::operator=(double const &x){
 
 	ed::Monomio m = Monomio();
 	m.setCoeficiente(x);
@@ -73,8 +66,7 @@ ed::Polinomio & ed::Polinomio::operator=(double const &x)
 
 //////////////////////////////////////////////////////////////
 
-ed::Polinomio & ed::Polinomio::operator+=(Polinomio const &p)
-{
+ed::Polinomio & ed::Polinomio::operator+=(Polinomio const &p){
 	
 	for(int i=0;i<p.getNumeroMonomios();i++){ 	// Recorremos el polinomio pasado como parámetro 
 												// y comprobamos que el monomio existe en el polinomio 
@@ -107,94 +99,152 @@ ed::Polinomio & ed::Polinomio::operator+=(Polinomio const &p)
 	}
 
 	return *this; // Se devuelve el objeto actual
+
 }
 
-ed::Polinomio & ed::Polinomio::operator+=(ed::Monomio const &m)
-{
+ed::Polinomio & ed::Polinomio::operator+=(ed::Monomio const &m){
 	
 	if(existeMonomio(m.getGrado())){
 		for(int i=0;i<getNumeroMonomios();i++){
 
 			if(polinomio_[i].getGrado() == m.getGrado()){
-				polinomio_[i].setCoeficiente( polinomio_[i].getCoeficiente() + m.getCoeficiente() );
+				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() + m.getCoeficiente() );
+			}
+		}
+	
+	}else{
+		this->polinomio_.push_back(m);
+	}
+
+	return *this; // Se devuelve el objeto actual
+}
+
+ed::Polinomio & ed::Polinomio::operator+=(double const &x){
+
+	if(existeMonomio(0)){
+		
+		for(int i=0;i<getNumeroMonomios();i++){
+			if(polinomio_[i].getGrado() == 0){
+				polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() + x);
 			}
 		}
 	
 	}else{
 	
-		polinomio_.push_back(m);
+		ed::Monomio m = Monomio();
+		m.setGrado(0);
+		m.setCoeficiente(x);
+		this->polinomio_.push_back(m);
 	
 	}
 
+	return *this; // Se devuelve el objeto actual
+}
+
+ed::Polinomio & ed::Polinomio::operator-=(ed::Polinomio const &p){
+	
+		for(int i=0;i<p.getNumeroMonomios();i++){ 
+
+		if(existeMonomio(p.polinomio_[i].getGrado())){
+
+			for(int j=0;j<getNumeroMonomios();j++){
+
+				if(this->polinomio_[j].getGrado() == p.polinomio_[i].getGrado()){
+
+					this->polinomio_[j].setCoeficiente(this->polinomio_[j].getCoeficiente() - p.polinomio_[i].getCoeficiente());
+
+				}
+			}
+		}
+
+		if(!existeMonomio(p.polinomio_[i].getGrado())){
+			ed::Monomio m = Monomio();
+			m = p.getMonomio(p.polinomio_[i].getGrado());
+			m.setCoeficiente(m.getCoeficiente() * (-1));
+			this->polinomio_.push_back(m);
+		}
+	}
+
+	return *this; // Se devuelve el objeto actual
+}
+
+ed::Polinomio & ed::Polinomio::operator-=(ed::Monomio &m){
+	
+	if(existeMonomio(m.getGrado())){
+	
+		for(int i=0;i<getNumeroMonomios();i++){
+
+			if(polinomio_[i].getGrado() == m.getGrado()){
+				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() - m.getCoeficiente() );
+			}
+		}
+	
+	}else{
+		m.setCoeficiente(m.getCoeficiente() * (-1));
+		this->polinomio_.push_back(m);
+	}
+
+	return *this; // Se devuelve el objeto actual
+}
+
+ed::Polinomio & ed::Polinomio::operator-=(double const &x){
+	
+		if(existeMonomio(0)){
+		
+		for(int i=0;i<getNumeroMonomios();i++){
+			if(polinomio_[i].getGrado() == 0){
+				polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() - x);
+			}
+		}
+	
+	}else{
+	
+		ed::Monomio m = Monomio();
+		m.setGrado(0);
+		m.setCoeficiente((-1) * x);
+		this->polinomio_.push_back(m);
+	
+	}
+	
+	return *this; // Se devuelve el objeto actual
+}
+
+ed::Polinomio & ed::Polinomio::operator*=(ed::Polinomio const &p){
 	
 
-	return *this; // Se devuelve el objeto actual
-}
+	for(int i=0;i<p.getNumeroMonomios();i++){
 
-ed::Polinomio & ed::Polinomio::operator+=(double const &x)
-{
-	// COMPLETAR
+		for(int j=0;j<getNumeroMonomios();j++){
 
-	return *this; // Se devuelve el objeto actual
-}
+			polinomio_[j].setCoeficiente( p.polinomio_[i].getCoeficiente() * polinomio_[j].getCoeficiente());
+			polinomio_[j].setGrado( p.polinomio_[i].getCoeficiente() + polinomio_[j].getCoeficiente() );
 
-ed::Polinomio & ed::Polinomio::operator-=(ed::Polinomio const &p)
-{
-	// COMPLETAR
+		}
 
-	return *this; // Se devuelve el objeto actual
-}
+	}
 
-ed::Polinomio & ed::Polinomio::operator-=(ed::Monomio const &m)
-{
-	// COMPLETAR
-	return *this; // Se devuelve el objeto actual
-}
 
-ed::Polinomio & ed::Polinomio::operator-=(double const &x)
-{
-	// COMPLETAR
 
 	return *this; // Se devuelve el objeto actual
 }
 
-ed::Polinomio & ed::Polinomio::operator*=(ed::Polinomio const &p)
-{
-	// COMPLETAR
-
+ed::Polinomio & ed::Polinomio::operator*=(ed::Monomio const &m){
 	return *this; // Se devuelve el objeto actual
 }
 
-ed::Polinomio & ed::Polinomio::operator*=(ed::Monomio const &m)
-{
-	// COMPLETAR
+ed::Polinomio & ed::Polinomio::operator*=(double const &x){
 	return *this; // Se devuelve el objeto actual
 }
 
-ed::Polinomio & ed::Polinomio::operator*=(double const &x)
-{
-	// COMPLETAR
-
+ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p){
 	return *this; // Se devuelve el objeto actual
 }
 
-ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p)
-{
-	// COMPLETAR
-
+ed::Polinomio & ed::Polinomio::operator/=(ed::Monomio const &m){
 	return *this; // Se devuelve el objeto actual
 }
 
-ed::Polinomio & ed::Polinomio::operator/=(ed::Monomio const &m)
-{
-	// COMPLETAR
-	return *this; // Se devuelve el objeto actual
-}
-
-ed::Polinomio & ed::Polinomio::operator/=(double const &x)
-{
-	// COMPLETAR
-
+ed::Polinomio & ed::Polinomio::operator/=(double const &x){
 	return *this; // Se devuelve el objeto actual
 }
 

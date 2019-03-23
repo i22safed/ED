@@ -29,69 +29,18 @@ class Polinomio: public ed::PolinomioInterfaz
   //! \name Atributos privados de la clase Polinomio
    private:
 
-<<<<<<< HEAD
   	std::vector<Monomio> polinomio_;
-=======
-		std::vector<Monomio> p_;
-		
->>>>>>> d350ff20da2fee9150ed513b0c8ea48d36861686
 
    //! \name Funciones o métodos públicos de la clase Polinomio
    public:
 
 	//! \name Constructores de la clase Polinomio
 
-<<<<<<< HEAD
   	inline Polinomio(){
-=======
-	Polinomio(){
-
-		Monomio m; 
-
-		m.setCoeficiente(0.0); 
-		m.setGrado(0);
-
-		#ifndef NDEBUG
-			assert(esNulo());
-		#endif
-	}
-
-	Polinomio(Polinomio const &p){
-	
-		for(int i=0; ){
-			
-		}
-	
-	}
-	
-	
-	
->>>>>>> d350ff20da2fee9150ed513b0c8ea48d36861686
 
 		  ed::Monomio m = ed::Monomio(0.0,0);
 
-<<<<<<< HEAD
 		  polinomio_.push_back(m);
-=======
-	inline bool esNulo()const{
-
-		#ifndef NDEBUG
-			assert(getNumeroMonomios() == 1);
-		#endif 
-
-		return ((this->p_[0].getCoeficiente() == 0.0) && (this->p_[0].getGrado() == 0));
-	
-	}
-
-	inline int getNumeroMonomios() const {
-		return this->p_.size();
-	}
-
-	
-
-
-	
->>>>>>> d350ff20da2fee9150ed513b0c8ea48d36861686
 
 		  #ifndef NDEBUG 
 			assert(esNulo());
@@ -199,7 +148,7 @@ class Polinomio: public ed::PolinomioInterfaz
 	
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 	Polinomio & operator-=(Polinomio const &p);
-	Polinomio & operator-=(Monomio const &m);
+	Polinomio & operator-=(Monomio &m); // Ya que si no existe el monomio hay que meterlo (modificarlo) negativo
 	Polinomio & operator-=(double const &x);
 
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
