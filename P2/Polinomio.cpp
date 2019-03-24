@@ -211,32 +211,48 @@ ed::Polinomio & ed::Polinomio::operator-=(double const &x){
 
 ed::Polinomio & ed::Polinomio::operator*=(ed::Polinomio const &p){
 	
-
 	for(int i=0;i<p.getNumeroMonomios();i++){
 
 		for(int j=0;j<getNumeroMonomios();j++){
 
 			polinomio_[j].setCoeficiente( p.polinomio_[i].getCoeficiente() * polinomio_[j].getCoeficiente());
-			polinomio_[j].setGrado( p.polinomio_[i].getCoeficiente() + polinomio_[j].getCoeficiente() );
+			polinomio_[j].setGrado( p.polinomio_[i].getGrado() + polinomio_[j].getGrado() );
 
 		}
-
 	}
-
-
 
 	return *this; // Se devuelve el objeto actual
 }
 
 ed::Polinomio & ed::Polinomio::operator*=(ed::Monomio const &m){
+	
+	for(int i=0;i<getNumeroMonomios();i++){
+
+		polinomio_[i].setCoeficiente( m.getCoeficiente() * polinomio_[i].getCoeficiente());
+		polinomio_[i].setGrado( m.getGrado() + polinomio_[i].getGrado() );
+
+	}
+
 	return *this; // Se devuelve el objeto actual
+
 }
 
 ed::Polinomio & ed::Polinomio::operator*=(double const &x){
+	
+	for(int i=0;i<getNumeroMonomios();i++){		
+		polinomio_[i].setCoeficiente(x * polinomio_[i].getCoeficiente());	
+	}
+	
 	return *this; // Se devuelve el objeto actual
 }
 
 ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p){
+	
+	
+	
+	
+	
+	
 	return *this; // Se devuelve el objeto actual
 }
 
