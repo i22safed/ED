@@ -17,6 +17,7 @@
 
 #include "PolinomioInterfaz.hpp"
 #include "Monomio.hpp"
+#include "operadoresExternosMonomios.hpp"
 
 
 // Se incluye la clase Polinomio dentro del espacio de nombre de la asigantura: ed
@@ -168,6 +169,7 @@ class Polinomio: public ed::PolinomioInterfaz
 	//! \name Funciones lectura y escritura de la clase Polinomio
 
 	void leerPolinomio();
+
 	void escribirPolinomio(); 
 
 
@@ -204,8 +206,7 @@ class Polinomio: public ed::PolinomioInterfaz
 
 		for(int i=0;i<getNumeroMonomios();i++){
 
-				if((std::abs(this->polinomio_[i].getCoeficiente() - p.polinomio_[i].getCoeficiente()) > COTA_ERROR)
-				or (this->polinomio_[i].getGrado() != p.polinomio_[i].getGrado())){
+				if(polinomio_[i] != p.polinomio_[i]){
 					valorDevuelto = false; 
 				}
 

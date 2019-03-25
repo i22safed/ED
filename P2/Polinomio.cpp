@@ -34,13 +34,10 @@ ed::Polinomio & ed::Polinomio::operator=(Polinomio const &p){
 
 ed::Polinomio & ed::Polinomio::operator=(ed::Monomio const &m){
 	
-	this->polinomio_[0].setCoeficiente(m.getCoeficiente());
-	this->polinomio_[0].setGrado(m.getGrado());
+	polinomio_.push_back(m);
 
 	#ifndef NDEBUG 
-		assert((getNumeroMonomios() == 1) and ( 
-			(std::abs(this->polinomio_[0].getCoeficiente() - m.getCoeficiente()) < COTA_ERROR) 
-			and (this->polinomio_[0].getGrado() == m.getGrado())));
+		assert((getNumeroMonomios() == 1) and (this->polinomio_[getNumeroMonomios()-1] == m));
 	#endif 
 
 	return *this; // Se devuelve el objeto actual
@@ -248,11 +245,22 @@ ed::Polinomio & ed::Polinomio::operator*=(double const &x){
 
 ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p){
 	
+	#ifndef NDEBUG 
+		assert(polinomio_[0].getGrado() >= p.polinomio_[0].getGrado());
+		assert(!p.esNulo());
+	#endif
 	
+	ed::Polinomio cociente = Polinomio();
+	ed::Polinomio resultado = Polinomio(); 
+	ed::Monomio termino = Monomio();
+
+	while(termino.getGrado()>= resultado.polinomio_[0].getGrado()){
+
+
+	}
 	
-	
-	
-	
+
+
 	return *this; // Se devuelve el objeto actual
 }
 
@@ -285,9 +293,13 @@ void ed::Polinomio::escribirPolinomio(){
 
 // Funciones auxiliares de la clase Polinomio
 
-double ed::Polinomio::calcularValor(double const &c){
+double ed::Polinomio::calcularValor(double const &x){
 
 	double valorDevuelto = 0.0; 
+
+	for(int i=0;i<getNumeroMonomios();i++){
+		valorDevuelto = valorDevuelto + pow(x,polinomio_[i].getGrado()) * polinomio_[i].getCoeficiente();
+	}
 
 	return valorDevuelto; 
 }
