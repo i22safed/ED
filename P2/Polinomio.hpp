@@ -70,7 +70,9 @@ class Polinomio: public ed::PolinomioInterfaz
 			assert(getNumeroMonomios() == 1);
 		#endif
 
-		return ((this->polinomio_[0].getCoeficiente() == 0.0) && (this->polinomio_[0].getGrado() == 0));
+		ed::Monomio m = Monomio(0.0,0);
+
+		return (polinomio_[0] == m);
 
 	}
 
@@ -195,6 +197,7 @@ class Polinomio: public ed::PolinomioInterfaz
 		return valorDevuelto; 
 
 	}
+
 
 	inline bool sonIguales(Polinomio const &p){	// Comprueba que dos polinomios son iguales 
 

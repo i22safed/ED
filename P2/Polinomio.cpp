@@ -54,8 +54,8 @@ ed::Polinomio & ed::Polinomio::operator=(double const &x){
 
 	#ifndef NDEBUG 
 		assert((getNumeroMonomios() == 1) and ( 
-			(std::abs(this->polinomio_[getNumeroMonomios()-1].getCoeficiente() - x) < COTA_ERROR) and 
-			(this->polinomio_[getNumeroMonomios()-1].getGrado() == 0) ));
+			(std::abs(this->polinomio_[0].getCoeficiente() - x) < COTA_ERROR) and 
+			(this->polinomio_[0].getGrado() == 0) ));
 	#endif 
 
 	return *this; // Se devuelve el objeto actual
@@ -92,6 +92,9 @@ ed::Polinomio & ed::Polinomio::operator+=(Polinomio const &p){
 			ed::Monomio m = Monomio();
 			m = p.getMonomio(p.polinomio_[i].getGrado());
 			this->polinomio_.push_back(m);
+
+			// AQUI HABRÍA QUE ORDENAR EL POLINOMIO
+
 		}
 	}
 
@@ -111,6 +114,9 @@ ed::Polinomio & ed::Polinomio::operator+=(ed::Monomio const &m){
 	
 	}else{
 		this->polinomio_.push_back(m);
+
+		// AQUI HABRÍA QUE ORDENAR EL POLINOMIO
+
 	}
 
 	return *this; // Se devuelve el objeto actual
@@ -256,6 +262,10 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p){
 
 	while(termino.getGrado()>= resultado.polinomio_[0].getGrado()){
 
+		
+
+
+		polinomio_.clear();
 
 	}
 	
