@@ -146,7 +146,7 @@ ed::Polinomio & ed::Polinomio::operator+=(double const &x){
 
 ed::Polinomio & ed::Polinomio::operator-=(ed::Polinomio const &p){
 	
-		for(int i=0;i<p.getNumeroMonomios();i++){ 
+	for(int i=0;i<p.getNumeroMonomios();i++){ 
 
 		if(existeMonomio(p.polinomio_[i].getGrado())){
 
@@ -256,21 +256,66 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p){
 		assert(!p.esNulo());
 	#endif
 	
+	// Dividendo → polinomio
+	// Divisor → p
 	ed::Polinomio cociente = Polinomio();
 	ed::Polinomio resultado = Polinomio(); 
 	ed::Monomio termino = Monomio();
+	int i=0; 
 
-	while(termino.getGrado()>= resultado.polinomio_[0].getGrado()){
+	while(this->polinomio_[0].getGrado()>= resultado.polinomio_[0].getGrado()){
 
+		// Guardamos en cociente el termino primer termino de la division 
+		cociente.polinomio_[i] = this->polinomio_[0] / p.polinomio_[0];  
 		
+		// Multiplicamos el cociente[0] * divisor para meterlo en resultado
+		// resultado = p * cociente.polinomio_[i]; Es necesario hacerle un bucle 
 
+		for(int i=0;i<p.getNumeroMonomios();i++){
 
-		polinomio_.clear();
+			termino = cociente.polinomio_[0] * p.polinomio_[i];			// (x^2) * (X^3 + 2X^2 ...)  
+			termino.setCoeficiente(termino.getCoeficiente() * (-1));	// cambiamos de signo
+			resultado.polinomio_.push_back(termino);					// resultado posee el primer termino
+			
+		}
+
+		// Dividendo = dividendo + resultado
+
+		for(int i=0;i<p.getNumeroMonomios();i++){ 	
+
+			if(existeMonomio(p.polinomio_[i].getGrado())){
+
+				for(int j=0;j<getNumeroMonomios();j++){
+
+					if(this->polinomio_[j].getGrado() == p.polinomio_[i].getGrado()){
+
+						this->polinomio_[j].setCoeficiente(this->polinomio_[j].getCoeficiente() + p.polinomio_[i].getCoeficiente());
+
+					}
+				}
+			}
+
+			if(!existeMonomio(p.polinomio_[i].getGrado())){
+				ed::Monomio m = Monomio();
+				m = p.getMonomio(p.polinomio_[i].getGrado());
+				this->polinomio_.push_back(m);
+
+				// AQUI HABRÍA QUE ORDENAR EL POLINOMIO
+
+			}
+		}
+
+		// Borramos el primer elemento ya que es necesario en el proceso de división 
+		// en el resto de los monomios, si tenemos algún elemento con coeficiente 0 
+
+		polinomio_.erase(polinomio_.begin()+i); // Borramos el Monomio principal
+		
+		i++; // incrementamos el indice para meter en el cociente el siguiente termino
+
+		// Aqui terminaría la primera iteración 
 
 	}
 	
-
-
 	return *this; // Se devuelve el objeto actual
 }
 
