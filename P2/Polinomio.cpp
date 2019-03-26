@@ -316,14 +316,28 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p){
 
 	}
 	
-	return *this; // Se devuelve el objeto actual
+	return cociente; // Se devuelve el objeto actual
 }
 
 ed::Polinomio & ed::Polinomio::operator/=(ed::Monomio const &m){
+	
+	for(int i=0;i<getNumeroMonomios();i++){
+		polinomio_[i] = polinomio_[i] / m;
+	}
+	
+	// Comprobar que es divisible 
+
 	return *this; // Se devuelve el objeto actual
 }
 
 ed::Polinomio & ed::Polinomio::operator/=(double const &x){
+	
+	for(int i=0;i<getNumeroMonomios();i++){
+		polinomio_[i].setCoeficiente(polinomio_[i].getCoeficiente()/x);
+	}
+
+	// aqui no hay que comprobar nada (?)
+	
 	return *this; // Se devuelve el objeto actual
 }
 
