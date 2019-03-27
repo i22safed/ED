@@ -51,13 +51,16 @@ class Polinomio: public ed::PolinomioInterfaz
 
 	inline Polinomio(Polinomio const & p){
 
+		ed::Monomio m = Monomio();
+
 		for(int i=0;i<p.getNumeroMonomios();i++){
-			this->polinomio_[i].setCoeficiente(p.polinomio_[i].getCoeficiente());
-			this->polinomio_[i].setGrado(p.polinomio_[i].getGrado());
+			
+			m = p.polinomio_[i];
+			polinomio_.push_back(m);
 		}
 
 		#ifndef NDEBUG 
-			//assert(esIgual polinomio_ y p);
+			assert(sonIguales(p));
 		#endif
 
 	}
@@ -85,8 +88,6 @@ class Polinomio: public ed::PolinomioInterfaz
 		return polinomio_[0].getGrado();
 
 	}
-
-
 
 	inline int getNumeroMonomios() const {
 		return polinomio_.size();
@@ -208,11 +209,9 @@ class Polinomio: public ed::PolinomioInterfaz
 		#endif 
 
 		for(int i=0;i<getNumeroMonomios();i++){
-
 				if(polinomio_[i] != p.polinomio_[i]){
 					valorDevuelto = false; 
 				}
-
 		}
 
 		return valorDevuelto; 

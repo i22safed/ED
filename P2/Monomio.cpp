@@ -218,23 +218,23 @@ void ed::Monomio::escribirMonomio()const{
 	*/	
 
 	if(getGrado() == 0){
-		std::cout << getCoeficiente() << std::endl; 
+		std::cout << getCoeficiente() << " "; 
 	}
 	if(getGrado() == 1){
-		std::cout << getCoeficiente() << "x" << std::endl;
+		std::cout << getCoeficiente() << "x" << " ";
 	}
 	if(getCoeficiente() == 1 ){
-		std::cout << "x^" << getGrado() << std::endl; 
+		std::cout << "x^" << getGrado() << " "; 
 	}
 	if(getCoeficiente() == -1){
-		std::cout << "-x^" << getGrado() << std::endl; 
+		std::cout << "-x^" << getGrado() << " "; 
 	}
 	if((getCoeficiente() != 1) && 
 			(getCoeficiente() != -1) && 
 			(getGrado() != 0) && 
 			(getGrado() != 1)){
 				std::cout << getCoeficiente() << "x^" <<
-				getGrado() << std::endl;
+				getGrado() << " ";
 			}
 
 	return;

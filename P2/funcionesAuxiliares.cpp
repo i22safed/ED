@@ -67,7 +67,7 @@ void ed::testPolinomio()
   std::cout << "testPolinomio()" << std::endl;
   std::cout << RESET;
   std::cout << "Quitar el comentario de bloque cuando se haya codificado la clase Polinomio " << std::endl << std::endl;
-/*
+
   
 	double x;
 
@@ -133,7 +133,7 @@ void ed::testPolinomio()
 	// Pausa
 	std::cin.ignore();
 
-
+/*
 	////////////////////////////////////////////////////////
 	// Observadores de la clase Polinomio
 	std::cout<< "p1 = ";
