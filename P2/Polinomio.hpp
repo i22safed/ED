@@ -43,9 +43,9 @@ class Polinomio: public ed::PolinomioInterfaz
 
 		  polinomio_.push_back(m);
 
-		  #ifndef NDEBUG 
+		  #ifndef NDEBUG
 			assert(esNulo());
-		  #endif 
+		  #endif
 
 	}
 
@@ -54,17 +54,17 @@ class Polinomio: public ed::PolinomioInterfaz
 		ed::Monomio m = Monomio();
 
 		for(int i=0;i<p.getNumeroMonomios();i++){
-			
+
 			m = p.polinomio_[i];
 			polinomio_.push_back(m);
 		}
 
-		#ifndef NDEBUG 
+		#ifndef NDEBUG
 			assert(sonIguales(p));
 		#endif
 
 	}
-	
+
 	//! \name Observadores: funciones de consulta de la clase Polinomio
 
 	inline bool esNulo() const {
@@ -77,20 +77,14 @@ class Polinomio: public ed::PolinomioInterfaz
 
 	inline int getGrado() {
 
-		/*
-		#ifndef NDEBUG 
-			assert(estaOrdenado());
-		#endif
-		*/
-
-		int max = 0; 
+		int max = 0;
 
 		for(int i=0;i<getNumeroMonomios();i++){
 			if(max < polinomio_[i].getGrado())
 				max = polinomio_[i].getGrado();
 		}
 
-		return max; 
+		return max;
 
 	}
 
@@ -101,7 +95,7 @@ class Polinomio: public ed::PolinomioInterfaz
 	inline bool existeMonomio(int grado) const {
 
 		/*
-		#ifndef NDEBUG 
+		#ifndef NDEBUG
 			assert(getNumeroMonomios()>1);
 		#endif
 		*/
@@ -113,14 +107,14 @@ class Polinomio: public ed::PolinomioInterfaz
 				valorDevuelto = true;
 			}
 		}
-		
+
 		return valorDevuelto;
 
 	}
 
 	inline Monomio getMonomio(int grado) const {
 
-		#ifndef NDEBUG 		// Precondicion → El monomio debe existir 
+		#ifndef NDEBUG 		// Precondicion → El monomio debe existir
 			assert(existeMonomio(grado));
 		#endif
 
@@ -132,9 +126,9 @@ class Polinomio: public ed::PolinomioInterfaz
 				m = polinomio_[i];
 			}
 		}
-	
+
 		return m;
-	
+
 	}
 
 
@@ -156,7 +150,7 @@ class Polinomio: public ed::PolinomioInterfaz
 	Polinomio & operator+=(Polinomio const &p);
 	Polinomio & operator+=(Monomio const &m);
 	Polinomio & operator+=(double const &x);
-	
+
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 	Polinomio & operator-=(Polinomio const &p);
 	Polinomio & operator-=(Monomio &m); // Ya que si no existe el monomio hay que meterlo (modificarlo) negativo
@@ -171,7 +165,7 @@ class Polinomio: public ed::PolinomioInterfaz
 	Polinomio & operator/=(Polinomio const &p);
 	Polinomio & operator/=(Monomio const &m);
 	Polinomio & operator/=(double const &x);
-	
+
 
 
   /////////////////////////////////////////////////////////////////////////////////////
@@ -180,7 +174,7 @@ class Polinomio: public ed::PolinomioInterfaz
 
 	void leerPolinomio();
 
-	void escribirPolinomio(); 
+	void escribirPolinomio();
 
 
 	///////////////////////////////////////////////////////////////////////
@@ -190,26 +184,55 @@ class Polinomio: public ed::PolinomioInterfaz
 	double calcularValor(double const &x);
 
 
-	inline bool sonIguales(Polinomio const &p){	// Comprueba que dos polinomios son iguales 
+	inline bool sonIguales(Polinomio const &p){	// Comprueba que dos polinomios son iguales
 
-		bool valorDevuelto = true; 
+		bool valorDevuelto = true;
 
-		#ifndef NDEBUG 
+		#ifndef NDEBUG
 			assert(getNumeroMonomios() == p.getNumeroMonomios());
-		#endif 
+		#endif
 
 		for(int i=0;i<getNumeroMonomios();i++){
 				if(polinomio_[i] != p.polinomio_[i]){
-					valorDevuelto = false; 
+					valorDevuelto = false;
 				}
 		}
 
-		return valorDevuelto; 
+		return valorDevuelto;
 
 	}
 
-	// Incluir tambien la de ordenar vector ////////////////////
+	inline void ordenarPolinomio(){
 
+      ed::Polinomio aux = Polinomio();
+      ed::Monomio m = Monomio();
+      aux.polinomio_.clear();
+
+      // Primero quitamos posibles repetidos
+      for(int i=0;i<getNumeroMonomios();i++){
+          for(int j=i+1;j<getNumeroMonomios();j++){
+            if(this->polinomio_[i].getGrado() == this->polinomio_[j].getGrado()){
+              this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() + this->polinomio_[j].getCoeficiente());
+              this->polinomio_.erase(polinomio_.begin() + j);
+            }
+          }
+      }
+
+      // Ahora ordenamos en funcion del grado
+
+      for(int x=getGrado();x>=0;x--){
+        if(existeMonomio(x)){
+            m = getMonomio(x);
+            aux.polinomio_.push_back(m);
+        }
+      }
+
+      polinomio_.clear();
+
+      for(int y=0;y<aux.getNumeroMonomios();y++){
+        polinomio_.push_back(aux.polinomio_[y]);
+      }
+  }
 
 
 }; // Fin de la definición de la clase Polinomio

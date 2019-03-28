@@ -68,7 +68,7 @@ void ed::testPolinomio()
   std::cout << RESET;
   std::cout << "Quitar el comentario de bloque cuando se haya codificado la clase Polinomio " << std::endl << std::endl;
 
-  
+
 	double x;
 
 	ed::Monomio m;
@@ -102,7 +102,7 @@ void ed::testPolinomio()
 	std::cout<< "Lectura del polinomio "<< std::endl << std::endl;
 	std::cout << RESET;
 	p1.leerPolinomio();
-	
+
 
 	std::cout << std::endl << std::endl;
 
@@ -153,7 +153,6 @@ void ed::testPolinomio()
 	std::cout << std::endl << std::endl;
 
 
-
 	for (int i = 0; i <= p1.getGrado(); i++)
 	{
 		if (p1.existeMonomio(i))
@@ -176,8 +175,15 @@ void ed::testPolinomio()
 	// Pausa
 	std::cin.ignore();
 
+  std::cout << "Antes de la ordenación" << std::endl;
+  p1.escribirPolinomio();
+  p1.ordenarPolinomio();
+
+  std::cout << "Despues de la ordenación" << std::endl;
+  p1.escribirPolinomio();
 
 
+/*
 	////////////////////////////////////////////////////////
 	// Operadores de asignación
 
@@ -196,7 +202,7 @@ void ed::testPolinomio()
 	p2.escribirPolinomio();
 	std::cout << std::endl << std::endl;
 
-/*
+
 
 	// Asignación de un número a un polinomio
 	std::cout<< "Asignación de un monomio a un polinomio --> p1 = m"<< std::endl;
