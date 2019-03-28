@@ -14,17 +14,26 @@
 
 ed::Polinomio & ed::Polinomio::operator=(Polinomio const &p){
 
-	#ifndef NDEBUG 
-		assert(!sonIguales(p));
-	#endif
-	
-	for(int i=0;i<p.getNumeroMonomios();i++){
-			this->polinomio_[i].setCoeficiente(p.polinomio_[i].getCoeficiente());
-			this->polinomio_[i].setGrado(p.polinomio_[i].getGrado());
-	}
+	ed::Monomio aux = Monomio();
 
-	#ifndef NDEBUG 
-		assert(sonIguales(p));
+	#ifndef NDEBUG
+		assert(sonIguales(p) == false);
+	#endif
+
+	polinomio_.clear();		// Limpiamos el vector original
+
+	for(int i=0;i<getNumeroMonomios();i++){
+		aux.setCoeficiente(p.polinomio_[i].getCoeficiente());		// Sacamos el coeficiente y el grado
+		aux.setGrado(p.polinomio_[i].getGrado());								// para meterlo en un Monomio y
+		polinomio_.push_back(aux);															// y metemos el Monomio en el vector
+	}																													// actual
+
+	std::cout << "Hasta aqui llega " << std::endl;
+	this->escribirPolinomio();
+	std::cout << "Hasta aqui llega" << '\n';
+
+	#ifndef NDEBUG
+		assert(sonIguales(p) == true);
 	#endif
 
 	return *this;
@@ -32,12 +41,12 @@ ed::Polinomio & ed::Polinomio::operator=(Polinomio const &p){
 
 
 ed::Polinomio & ed::Polinomio::operator=(ed::Monomio const &m){
-	
+
 	polinomio_.push_back(m);
 
-	#ifndef NDEBUG 
+	#ifndef NDEBUG
 		assert((getNumeroMonomios() == 1) and (this->polinomio_[getNumeroMonomios()-1] == m));
-	#endif 
+	#endif
 
 	return *this; // Se devuelve el objeto actual
 }
@@ -51,11 +60,11 @@ ed::Polinomio & ed::Polinomio::operator=(double const &x){
 
 	polinomio_.push_back(m);
 
-	#ifndef NDEBUG 
-		assert((getNumeroMonomios() == 1) and ( 
-			(std::abs(this->polinomio_[0].getCoeficiente() - x) < COTA_ERROR) and 
+	#ifndef NDEBUG
+		assert((getNumeroMonomios() == 1) and (
+			(std::abs(this->polinomio_[0].getCoeficiente() - x) < COTA_ERROR) and
 			(this->polinomio_[0].getGrado() == 0) ));
-	#endif 
+	#endif
 
 	return *this; // Se devuelve el objeto actual
 }
@@ -63,13 +72,13 @@ ed::Polinomio & ed::Polinomio::operator=(double const &x){
 //////////////////////////////////////////////////////////////
 
 ed::Polinomio & ed::Polinomio::operator+=(Polinomio const &p){
-	
-	for(int i=0;i<p.getNumeroMonomios();i++){ 	// Recorremos el polinomio pasado como parámetro 
-												// y comprobamos que el monomio existe en el polinomio 
-												// actual: 
-												// 		- Si existe, hacemos la siguiente operacion 
+
+	for(int i=0;i<p.getNumeroMonomios();i++){ 	// Recorremos el polinomio pasado como parámetro
+												// y comprobamos que el monomio existe en el polinomio
+												// actual:
+												// 		- Si existe, hacemos la siguiente operacion
 												// 			p_[i] = p_[i] + p[i]
-												// 		- Si no existe, hacemos la siguiente operacion 
+												// 		- Si no existe, hacemos la siguiente operacion
 												// 			m = Monomio()
 												// 			m.grado = p[i].grado
 												// 			m.coeficiente = p[i].coeficiente
@@ -100,7 +109,7 @@ ed::Polinomio & ed::Polinomio::operator+=(Polinomio const &p){
 }
 
 ed::Polinomio & ed::Polinomio::operator+=(ed::Monomio const &m){
-	
+
 	if(existeMonomio(m.getGrado())){
 		for(int i=0;i<getNumeroMonomios();i++){
 
@@ -108,7 +117,7 @@ ed::Polinomio & ed::Polinomio::operator+=(ed::Monomio const &m){
 				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() + m.getCoeficiente() );
 			}
 		}
-	
+
 	}else{
 		this->polinomio_.push_back(m);
 	}
@@ -119,15 +128,15 @@ ed::Polinomio & ed::Polinomio::operator+=(ed::Monomio const &m){
 ed::Polinomio & ed::Polinomio::operator+=(double const &x){
 
 	if(existeMonomio(0)){
-		
+
 		for(int i=0;i<getNumeroMonomios();i++){
 			if(polinomio_[i].getGrado() == 0){
 				polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() + x);
 			}
 		}
-	
+
 	}else{
-	
+
 		ed::Monomio m = Monomio();
 		m.setGrado(0);
 		m.setCoeficiente(x);
@@ -138,8 +147,8 @@ ed::Polinomio & ed::Polinomio::operator+=(double const &x){
 }
 
 ed::Polinomio & ed::Polinomio::operator-=(ed::Polinomio const &p){
-	
-	for(int i=0;i<p.getNumeroMonomios();i++){ 
+
+	for(int i=0;i<p.getNumeroMonomios();i++){
 
 		if(existeMonomio(p.polinomio_[i].getGrado())){
 
@@ -165,16 +174,16 @@ ed::Polinomio & ed::Polinomio::operator-=(ed::Polinomio const &p){
 }
 
 ed::Polinomio & ed::Polinomio::operator-=(ed::Monomio &m){
-	
+
 	if(existeMonomio(m.getGrado())){
-	
+
 		for(int i=0;i<getNumeroMonomios();i++){
 
 			if(polinomio_[i].getGrado() == m.getGrado()){
 				this->polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() - m.getCoeficiente() );
 			}
 		}
-	
+
 	}else{
 		m.setCoeficiente(m.getCoeficiente() * (-1));
 		this->polinomio_.push_back(m);
@@ -184,29 +193,29 @@ ed::Polinomio & ed::Polinomio::operator-=(ed::Monomio &m){
 }
 
 ed::Polinomio & ed::Polinomio::operator-=(double const &x){
-	
+
 		if(existeMonomio(0)){
-		
+
 		for(int i=0;i<getNumeroMonomios();i++){
 			if(polinomio_[i].getGrado() == 0){
 				polinomio_[i].setCoeficiente(this->polinomio_[i].getCoeficiente() - x);
 			}
 		}
-	
+
 	}else{
-	
+
 		ed::Monomio m = Monomio();
 		m.setGrado(0);
 		m.setCoeficiente((-1) * x);
 		this->polinomio_.push_back(m);
-	
+
 	}
-	
+
 	return *this; // Se devuelve el objeto actual
 }
 
 ed::Polinomio & ed::Polinomio::operator*=(ed::Polinomio const &p){
-	
+
 	for(int i=0;i<p.getNumeroMonomios();i++){
 
 		for(int j=0;j<getNumeroMonomios();j++){
@@ -221,7 +230,7 @@ ed::Polinomio & ed::Polinomio::operator*=(ed::Polinomio const &p){
 }
 
 ed::Polinomio & ed::Polinomio::operator*=(ed::Monomio const &m){
-	
+
 	for(int i=0;i<getNumeroMonomios();i++){
 
 		polinomio_[i].setCoeficiente( m.getCoeficiente() * polinomio_[i].getCoeficiente());
@@ -234,46 +243,46 @@ ed::Polinomio & ed::Polinomio::operator*=(ed::Monomio const &m){
 }
 
 ed::Polinomio & ed::Polinomio::operator*=(double const &x){
-	
-	for(int i=0;i<getNumeroMonomios();i++){		
-		polinomio_[i].setCoeficiente(x * polinomio_[i].getCoeficiente());	
+
+	for(int i=0;i<getNumeroMonomios();i++){
+		polinomio_[i].setCoeficiente(x * polinomio_[i].getCoeficiente());
 	}
-	
+
 	return *this; // Se devuelve el objeto actual
 }
 
 ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p){
-	
-	#ifndef NDEBUG 
+
+	#ifndef NDEBUG
 		assert(getGrado() >= p.polinomio_[0].getGrado());
 		assert(!p.esNulo());
 	#endif
-	
-	ed::Polinomio * cociente = new Polinomio();		// Polinomio a retornar 
+
+	ed::Polinomio * cociente = new Polinomio();		// Polinomio a retornar
 	ed::Polinomio resultado = Polinomio(); 			// Resultado intermedio para restarlo al dividendo
 	ed::Monomio termino = Monomio();				// Variable auxiliar
-	int i=0; 
+	int i=0;
 
 	while((getGrado() >= p.polinomio_[i].getGrado()) or getNumeroMonomios() == 0){
 
-		cociente->polinomio_[i] = this->polinomio_[0] / p.polinomio_[0];  
+		cociente->polinomio_[i] = this->polinomio_[0] / p.polinomio_[0];
 
 		for(int j=0;j<p.getNumeroMonomios();j++){
 
-			termino = cociente->polinomio_[i] * p.polinomio_[j];		// Cociente[i] * Divisor  
-			termino.setCoeficiente(termino.getCoeficiente() * (-1));	// Cambio de signo 
-			resultado.polinomio_.push_back(termino);					// Añadimos a resultado el termino 
-			
+			termino = cociente->polinomio_[i] * p.polinomio_[j];		// Cociente[i] * Divisor
+			termino.setCoeficiente(termino.getCoeficiente() * (-1));	// Cambio de signo
+			resultado.polinomio_.push_back(termino);					// Añadimos a resultado el termino
+
 		}
 
 		// Dividendo = dividendo + resultado
 
 		for(int k=0;k<resultado.getNumeroMonomios();k++){ 					// Realizamos la suma de Dividendo +( - resultado )
 
-			if(existeMonomio(resultado.polinomio_[k].getGrado())){	// Si existe en el polinomio actual el grado del monomio del 
+			if(existeMonomio(resultado.polinomio_[k].getGrado())){	// Si existe en el polinomio actual el grado del monomio del
 																	// Polinomio secundario (resultado)
 
-				for(int j=0;j<getNumeroMonomios();j++){				// Recorremos el principal viendo cual es 
+				for(int j=0;j<getNumeroMonomios();j++){				// Recorremos el principal viendo cual es
 
 					if(this->polinomio_[j].getGrado() == resultado.polinomio_[k].getGrado()){
 
@@ -290,52 +299,52 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p){
 			}
 		}
 
-		// Borramos el primer elemento ya que es necesario en el proceso de división 
-		// en el resto de los monomios, si tenemos algún elemento con coeficiente 0 
+		// Borramos el primer elemento ya que es necesario en el proceso de división
+		// en el resto de los monomios, si tenemos algún elemento con coeficiente 0
 		// tambien deberemos eliminarlo
 
 		for(int x=0;x<getNumeroMonomios();x++){
 			if(polinomio_[x].getCoeficiente() == 0){
-				polinomio_.erase(polinomio_.begin() + x); // Todo polinomio cuyo coeficiente sea 0 	
+				polinomio_.erase(polinomio_.begin() + x); // Todo polinomio cuyo coeficiente sea 0
 			}
 		}
 
 		i++; // incrementamos el indice para meter en el cociente el siguiente termino
 
-		// Aqui terminaría la primera iteración 
+		// Aqui terminaría la primera iteración
 
 	}
-	
+
 	return * cociente; // Se devuelve el objeto actual
 }
 
 ed::Polinomio & ed::Polinomio::operator/=(ed::Monomio const &m){
 
-	
-	#ifndef NDEBUG 
-		assert(m.getGrado() <= getGrado());
-	#endif 
 
-	ed::Polinomio * cociente = new Polinomio();		// Polinomio a retornar 
+	#ifndef NDEBUG
+		assert(m.getGrado() <= getGrado());
+	#endif
+
+	ed::Polinomio * cociente = new Polinomio();		// Polinomio a retornar
 	ed::Polinomio resultado = Polinomio(); 			// Resultado intermedio para restarlo al dividendo
 	ed::Monomio termino = Monomio();				// Variable auxiliar
-	int i=0; 
+	int i=0;
 
 	while((getGrado() >= m.getGrado()) or getNumeroMonomios() == 0){
-		
-		cociente->polinomio_[i] = this->polinomio_[0] / m;  
 
-		termino = cociente->polinomio_[i] * m;	// Cociente[i] * Divisor  
-		termino.setCoeficiente(termino.getCoeficiente() * (-1));	// Cambio de signo 
+		cociente->polinomio_[i] = this->polinomio_[0] / m;
+
+		termino = cociente->polinomio_[i] * m;	// Cociente[i] * Divisor
+		termino.setCoeficiente(termino.getCoeficiente() * (-1));	// Cambio de signo
 		resultado.polinomio_.push_back(termino);
-		
-		
+
+
 		for(int k=0;k<resultado.getNumeroMonomios();k++){ 					// Realizamos la suma de Dividendo +( - resultado )
 
-			if(existeMonomio(resultado.polinomio_[k].getGrado())){	// Si existe en el polinomio actual el grado del monomio del 
+			if(existeMonomio(resultado.polinomio_[k].getGrado())){	// Si existe en el polinomio actual el grado del monomio del
 																	// Polinomio secundario (resultado)
 
-				for(int j=0;j<getNumeroMonomios();j++){				// Recorremos el principal viendo cual es 
+				for(int j=0;j<getNumeroMonomios();j++){				// Recorremos el principal viendo cual es
 
 					if(this->polinomio_[j].getGrado() == resultado.polinomio_[k].getGrado()){
 
@@ -354,19 +363,19 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Monomio const &m){
 
 		for(int x=0;x<getNumeroMonomios();x++){
 			if(polinomio_[x].getCoeficiente() == 0){
-				polinomio_.erase(polinomio_.begin() + x); // Todo polinomio cuyo coeficiente sea 0 	
+				polinomio_.erase(polinomio_.begin() + x); // Todo polinomio cuyo coeficiente sea 0
 			}
 		}
-		
-		i++; 
-	
+
+		i++;
+
 	}
-	
+
 	return *this; // Se devuelve el objeto actual
 }
 
 ed::Polinomio & ed::Polinomio::operator/=(double const &x){
-	
+
 	for(int i=0;i<getNumeroMonomios();i++){
 		polinomio_[i].setCoeficiente(polinomio_[i].getCoeficiente()/x);
 	}
@@ -384,21 +393,21 @@ ed::Polinomio & ed::Polinomio::operator/=(double const &x){
 
 void ed::Polinomio::leerPolinomio(){
 
-	bool check = true; 
+	bool check = true;
 	double coeficiente;
 	int grado;
-	ed::Monomio m = Monomio(0.0,0); 
+	ed::Monomio m = Monomio(0.0,0);
 
-	this->polinomio_.clear(); 	// Limpiamos el vector ya que 
+	this->polinomio_.clear(); 	// Limpiamos el vector ya que
 								// contiene el Monomio (0,0) del
-								// constructor 
+								// constructor
 
 	std::cout << "\nPara salir introduzca en coeficiente 0 o grado negativo\n";
 
 	while(check){
 
-		std::cout << "\nCoeficiente: ";  
-		std::cin >> coeficiente; 
+		std::cout << "\nCoeficiente: ";
+		std::cin >> coeficiente;
 
 		std::cout << "Grado: ";
 		std::cin >> grado;
@@ -412,14 +421,14 @@ void ed::Polinomio::leerPolinomio(){
 		}
 	}
 
-	
+
 
 }
 
 void ed::Polinomio::escribirPolinomio(){
 
 	for(int i=0;i<getNumeroMonomios();i++){
-		polinomio_[i].escribirMonomio(); 
+		polinomio_[i].escribirMonomio();
 	}
 
 	std::cout << "\n";
@@ -433,11 +442,11 @@ void ed::Polinomio::escribirPolinomio(){
 
 double ed::Polinomio::calcularValor(double const &x){
 
-	double valorDevuelto = 0.0; 
+	double valorDevuelto = 0.0;
 
 	for(int i=0;i<getNumeroMonomios();i++){
 		valorDevuelto = valorDevuelto + pow(x,polinomio_[i].getGrado()) * polinomio_[i].getCoeficiente();
 	}
 
-	return valorDevuelto; 
+	return valorDevuelto;
 }

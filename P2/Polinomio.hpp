@@ -188,9 +188,9 @@ class Polinomio: public ed::PolinomioInterfaz
 
 		bool valorDevuelto = true;
 
-		#ifndef NDEBUG
-			assert(getNumeroMonomios() == p.getNumeroMonomios());
-		#endif
+		if(getNumeroMonomios() != p.getNumeroMonomios()){
+      valorDevuelto = false;
+    }
 
 		for(int i=0;i<getNumeroMonomios();i++){
 				if(polinomio_[i] != p.polinomio_[i]){

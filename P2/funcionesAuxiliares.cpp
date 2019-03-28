@@ -177,13 +177,16 @@ void ed::testPolinomio()
 
   std::cout << "Antes de la ordenación" << std::endl;
   p1.escribirPolinomio();
+
   p1.ordenarPolinomio();
+  p2.ordenarPolinomio();
+  p3.ordenarPolinomio();
 
   std::cout << "Despues de la ordenación" << std::endl;
   p1.escribirPolinomio();
 
 
-/*
+
 	////////////////////////////////////////////////////////
 	// Operadores de asignación
 
@@ -195,6 +198,9 @@ void ed::testPolinomio()
 	std::cout<< "Operador de asignación de un polinomio a otro polinomio "<< std::endl;
 	std::cout<< "p1 = p2"<< std::endl;
 	p1 = p2;
+
+/*
+
 	std::cout<< "p1 = ";
 	p1.escribirPolinomio();
 	std::cout << std::endl;
