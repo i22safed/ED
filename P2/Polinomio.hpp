@@ -69,23 +69,28 @@ class Polinomio: public ed::PolinomioInterfaz
 
 	inline bool esNulo() const {
 
-		#ifndef NDEBUG
-			assert(getNumeroMonomios() == 1);
-		#endif
-
 		ed::Monomio m = Monomio(0.0,0);
 
 		return (polinomio_[0] == m);
 
 	}
 
-	inline int getGrado() const {
+	inline int getGrado() {
 
+		/*
 		#ifndef NDEBUG 
-			//assert(polinomioOrdenado() == true);
+			assert(estaOrdenado());
 		#endif
+		*/
 
-		return polinomio_[0].getGrado();
+		int max = 0; 
+
+		for(int i=0;i<getNumeroMonomios();i++){
+			if(max < polinomio_[i].getGrado())
+				max = polinomio_[i].getGrado();
+		}
+
+		return max; 
 
 	}
 
@@ -95,14 +100,16 @@ class Polinomio: public ed::PolinomioInterfaz
 
 	inline bool existeMonomio(int grado) const {
 
+		/*
 		#ifndef NDEBUG 
-			assert(!esNulo());
+			assert(getNumeroMonomios()>1);
 		#endif
+		*/
 
 		bool valorDevuelto = false;
 
 		for(int i=0;i<getNumeroMonomios();i++){
-			if(polinomio_[i].getGrado() == grado){
+			if(this->polinomio_[i].getGrado() == grado){
 				valorDevuelto = true;
 			}
 		}
@@ -181,23 +188,6 @@ class Polinomio: public ed::PolinomioInterfaz
 	//! \name Funciones auxiliares de la clase Polinomio
 
 	double calcularValor(double const &x);
-
-	inline bool estaOrdenado() const{
-
-		int max = 10000; 
-		bool valorDevuelto = true; 
-
-		for (int i=0; i<getNumeroMonomios();i++){
-			if(max > polinomio_[i].getGrado()){
-				max = polinomio_[i].getGrado();
-			}else{
-				valorDevuelto = false; 
-			}
-		}
-
-		return valorDevuelto; 
-
-	}
 
 
 	inline bool sonIguales(Polinomio const &p){	// Comprueba que dos polinomios son iguales 

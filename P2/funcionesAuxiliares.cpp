@@ -102,6 +102,8 @@ void ed::testPolinomio()
 	std::cout<< "Lectura del polinomio "<< std::endl << std::endl;
 	std::cout << RESET;
 	p1.leerPolinomio();
+	
+
 	std::cout << std::endl << std::endl;
 
 	// Constructor de copia
@@ -133,10 +135,10 @@ void ed::testPolinomio()
 	// Pausa
 	std::cin.ignore();
 
-/*
+
 	////////////////////////////////////////////////////////
 	// Observadores de la clase Polinomio
-	std::cout<< "p1 = ";
+	std::cout<< "\n\np1 = ";
 	p1.escribirPolinomio();
 	std::cout << std::endl << std::endl;
 
@@ -149,6 +151,8 @@ void ed::testPolinomio()
 	std::cout << std::endl;
 	std::cout << "número de monomios del polinomio p1: " << p1.getNumeroMonomios();
 	std::cout << std::endl << std::endl;
+
+
 
 	for (int i = 0; i <= p1.getGrado(); i++)
 	{
@@ -173,6 +177,7 @@ void ed::testPolinomio()
 	std::cin.ignore();
 
 
+
 	////////////////////////////////////////////////////////
 	// Operadores de asignación
 
@@ -190,6 +195,8 @@ void ed::testPolinomio()
 	std::cout<< "p2 = ";
 	p2.escribirPolinomio();
 	std::cout << std::endl << std::endl;
+
+/*
 
 	// Asignación de un número a un polinomio
 	std::cout<< "Asignación de un monomio a un polinomio --> p1 = m"<< std::endl;

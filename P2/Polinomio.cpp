@@ -13,11 +13,10 @@
 /////////////////////////////////////////////////////////////
 
 ed::Polinomio & ed::Polinomio::operator=(Polinomio const &p){
-	
+
 	#ifndef NDEBUG 
 		assert(!sonIguales(p));
 	#endif
-	
 	
 	for(int i=0;i<p.getNumeroMonomios();i++){
 			this->polinomio_[i].setCoeficiente(p.polinomio_[i].getCoeficiente());
@@ -92,13 +91,11 @@ ed::Polinomio & ed::Polinomio::operator+=(Polinomio const &p){
 			ed::Monomio m = Monomio();
 			m = p.getMonomio(p.polinomio_[i].getGrado());
 			this->polinomio_.push_back(m);
-
-			// AQUI HABRÍA QUE ORDENAR EL POLINOMIO
-
 		}
 	}
 
-	return *this; // Se devuelve el objeto actual
+
+	return *this;
 
 }
 
@@ -114,9 +111,6 @@ ed::Polinomio & ed::Polinomio::operator+=(ed::Monomio const &m){
 	
 	}else{
 		this->polinomio_.push_back(m);
-
-		// AQUI HABRÍA QUE ORDENAR EL POLINOMIO
-
 	}
 
 	return *this; // Se devuelve el objeto actual
@@ -138,7 +132,6 @@ ed::Polinomio & ed::Polinomio::operator+=(double const &x){
 		m.setGrado(0);
 		m.setCoeficiente(x);
 		this->polinomio_.push_back(m);
-	
 	}
 
 	return *this; // Se devuelve el objeto actual
@@ -261,7 +254,7 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p){
 	ed::Monomio termino = Monomio();				// Variable auxiliar
 	int i=0; 
 
-	while((getGrado() >= p.getGrado()) or getNumeroMonomios() == 0){
+	while((getGrado() >= p.polinomio_[i].getGrado()) or getNumeroMonomios() == 0){
 
 		cociente->polinomio_[i] = this->polinomio_[0] / p.polinomio_[0];  
 
@@ -418,6 +411,9 @@ void ed::Polinomio::leerPolinomio(){
 			this->polinomio_.push_back(m);
 		}
 	}
+
+	
+
 }
 
 void ed::Polinomio::escribirPolinomio(){
