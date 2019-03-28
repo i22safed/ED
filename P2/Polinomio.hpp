@@ -94,11 +94,7 @@ class Polinomio: public ed::PolinomioInterfaz
 
 	inline bool existeMonomio(int grado) const {
 
-		/*
-		#ifndef NDEBUG
-			assert(getNumeroMonomios()>1);
-		#endif
-		*/
+		// Esto debe de llevar precondición
 
 		bool valorDevuelto = false;
 
@@ -189,8 +185,10 @@ class Polinomio: public ed::PolinomioInterfaz
 		bool valorDevuelto = true;
 
 		if(getNumeroMonomios() != p.getNumeroMonomios()){
-      valorDevuelto = false;
-    }
+		
+			valorDevuelto = false;
+		
+		}
 
 		for(int i=0;i<getNumeroMonomios();i++){
 				if(polinomio_[i] != p.polinomio_[i]){

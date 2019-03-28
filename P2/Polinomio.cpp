@@ -22,19 +22,16 @@ ed::Polinomio & ed::Polinomio::operator=(Polinomio const &p){
 
 	polinomio_.clear();		// Limpiamos el vector original
 
-	for(int i=0;i<getNumeroMonomios();i++){
+	for(int i=0;i<p.getNumeroMonomios();i++){
 		aux.setCoeficiente(p.polinomio_[i].getCoeficiente());		// Sacamos el coeficiente y el grado
-		aux.setGrado(p.polinomio_[i].getGrado());								// para meterlo en un Monomio y
-		polinomio_.push_back(aux);															// y metemos el Monomio en el vector
-	}																													// actual
-
-	std::cout << "Hasta aqui llega " << std::endl;
-	this->escribirPolinomio();
-	std::cout << "Hasta aqui llega" << '\n';
+		aux.setGrado(p.polinomio_[i].getGrado());					// para meterlo en un Monomio y
+		polinomio_.push_back(aux);									// y metemos el Monomio en el vector
+	}																// actual
 
 	#ifndef NDEBUG
 		assert(sonIguales(p) == true);
 	#endif
+	
 
 	return *this;
 }
