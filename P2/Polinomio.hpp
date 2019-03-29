@@ -217,7 +217,6 @@ class Polinomio: public ed::PolinomioInterfaz
       }
 
       // Ahora ordenamos en funcion del grado
-
       for(int x=getGrado();x>=0;x--){
         if(existeMonomio(x)){
             m = getMonomio(x);

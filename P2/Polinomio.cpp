@@ -32,13 +32,14 @@ ed::Polinomio & ed::Polinomio::operator=(Polinomio const &p){
 		assert(sonIguales(p) == true);
 	#endif
 	
-
 	return *this;
 }
 
 
 ed::Polinomio & ed::Polinomio::operator=(ed::Monomio const &m){
 
+	
+	polinomio_.clear();
 	polinomio_.push_back(m);
 
 	#ifndef NDEBUG
@@ -55,6 +56,7 @@ ed::Polinomio & ed::Polinomio::operator=(double const &x){
 	m.setCoeficiente(x);
 	m.setGrado(0);
 
+	polinomio_.clear();
 	polinomio_.push_back(m);
 
 	#ifndef NDEBUG
@@ -186,6 +188,12 @@ ed::Polinomio & ed::Polinomio::operator-=(ed::Monomio &m){
 		this->polinomio_.push_back(m);
 	}
 
+	for(int x=0;x<getNumeroMonomios();x++){
+		if(polinomio_[x].getCoeficiente() == 0){
+			polinomio_.erase(polinomio_.begin() + x); // Todo polinomio cuyo coeficiente sea 0
+		}
+	}
+
 	return *this; // Se devuelve el objeto actual
 }
 
@@ -206,6 +214,12 @@ ed::Polinomio & ed::Polinomio::operator-=(double const &x){
 		m.setCoeficiente((-1) * x);
 		this->polinomio_.push_back(m);
 
+	}
+
+	for(int x=0;x<getNumeroMonomios();x++){
+		if(polinomio_[x].getCoeficiente() == 0){
+			polinomio_.erase(polinomio_.begin() + x); // Todo polinomio cuyo coeficiente sea 0
+		}
 	}
 
 	return *this; // Se devuelve el objeto actual
@@ -255,18 +269,18 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p){
 		assert(!p.esNulo());
 	#endif
 
-	ed::Polinomio * cociente = new Polinomio();		// Polinomio a retornar
+	ed::Polinomio cociente = Polinomio();		// Polinomio a retornar
 	ed::Polinomio resultado = Polinomio(); 			// Resultado intermedio para restarlo al dividendo
 	ed::Monomio termino = Monomio();				// Variable auxiliar
 	int i=0;
 
-	while((getGrado() >= p.polinomio_[i].getGrado()) or getNumeroMonomios() == 0){
+	while((this->polinomio_[i].getGrado() >= p.polinomio_[i].getGrado()) or getNumeroMonomios() == 0){
 
-		cociente->polinomio_[i] = this->polinomio_[0] / p.polinomio_[0];
+		cociente.polinomio_[i] = this->polinomio_[0] / p.polinomio_[0];
 
 		for(int j=0;j<p.getNumeroMonomios();j++){
 
-			termino = cociente->polinomio_[i] * p.polinomio_[j];		// Cociente[i] * Divisor
+			termino = cociente.polinomio_[i] * p.polinomio_[j];		// Cociente[i] * Divisor
 			termino.setCoeficiente(termino.getCoeficiente() * (-1));	// Cambio de signo
 			resultado.polinomio_.push_back(termino);					// Añadimos a resultado el termino
 
@@ -301,8 +315,8 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p){
 		// tambien deberemos eliminarlo
 
 		for(int x=0;x<getNumeroMonomios();x++){
-			if(polinomio_[x].getCoeficiente() == 0){
-				polinomio_.erase(polinomio_.begin() + x); // Todo polinomio cuyo coeficiente sea 0
+			if(this->polinomio_[x].getCoeficiente() == 0){
+				this->polinomio_.erase(polinomio_.begin() + x); // Todo polinomio cuyo coeficiente sea 0
 			}
 		}
 
@@ -312,11 +326,20 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Polinomio const &p){
 
 	}
 
-	return * cociente; // Se devuelve el objeto actual
+	polinomio_.clear();
+
+	for(int y=0;y<cociente.getNumeroMonomios();y++){
+		termino.setCoeficiente(cociente.polinomio_[y].getCoeficiente());
+		termino.setGrado(cociente.polinomio_[y].getGrado());
+		polinomio_.push_back(termino);
+	}
+
+	return * this; // Se devuelve el objeto actual
 }
 
 ed::Polinomio & ed::Polinomio::operator/=(ed::Monomio const &m){
 
+	///// CAMBIAR OPERADOR DE DIVISION //////////////////////////////////////////////
 
 	#ifndef NDEBUG
 		assert(m.getGrado() <= getGrado());
@@ -327,7 +350,7 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Monomio const &m){
 	ed::Monomio termino = Monomio();				// Variable auxiliar
 	int i=0;
 
-	while((getGrado() >= m.getGrado()) or getNumeroMonomios() == 0){
+	while((polinomio_[i].getGrado() >= m.getGrado()) or getNumeroMonomios() == 0){
 
 		cociente->polinomio_[i] = this->polinomio_[0] / m;
 
@@ -355,12 +378,6 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Monomio const &m){
 				ed::Monomio m = Monomio();
 				m = resultado.getMonomio(resultado.polinomio_[k].getGrado());
 				this->polinomio_.push_back(m);
-			}
-		}
-
-		for(int x=0;x<getNumeroMonomios();x++){
-			if(polinomio_[x].getCoeficiente() == 0){
-				polinomio_.erase(polinomio_.begin() + x); // Todo polinomio cuyo coeficiente sea 0
 			}
 		}
 
