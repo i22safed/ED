@@ -51,7 +51,7 @@ class Polinomio: public ed::PolinomioInterfaz
 
 	inline Polinomio(Polinomio const & p){
 
-		ed::Monomio m = Monomio();
+		ed::Monomio m ;
 
 		for(int i=0;i<p.getNumeroMonomios();i++){
 
@@ -186,13 +186,13 @@ class Polinomio: public ed::PolinomioInterfaz
 
 		if(getNumeroMonomios() != p.getNumeroMonomios()){
 		
-			valorDevuelto = false;
+			return false;
 		
 		}
 
 		for(int i=0;i<getNumeroMonomios();i++){
 				if(polinomio_[i] != p.polinomio_[i]){
-					valorDevuelto = false;
+					return false;
 				}
 		}
 
@@ -203,7 +203,7 @@ class Polinomio: public ed::PolinomioInterfaz
 	inline void ordenarPolinomio(){
 
       ed::Polinomio aux = Polinomio();
-      ed::Monomio m = Monomio();
+      ed::Monomio m ;
       aux.polinomio_.clear();
 
       // Primero quitamos posibles repetidos

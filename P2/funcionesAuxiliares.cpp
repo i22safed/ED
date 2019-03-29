@@ -153,16 +153,14 @@ void ed::testPolinomio()
 	std::cout << std::endl << std::endl;
 
 
-	for (int i = 0; i <= p1.getGrado(); i++)
-	{
-		if (p1.existeMonomio(i))
-		{
+	for (int i = p1.getGrado();i>=0;i--){
+
+		if (p1.existeMonomio(i)){
+			
 			std::cout << "Monomio de grado " << i << " --> ";
 			p1.getMonomio(i).escribirMonomio();
 			std::cout << std::endl;
-		}
-		else
-		{
+		}else{
 			std::cout << "Monomio de grado " << i << " --> 0.0";
 			std::cout << std::endl;
 		}
@@ -174,16 +172,6 @@ void ed::testPolinomio()
 	std::cout << RESET;
 	// Pausa
 	std::cin.ignore();
-
-  std::cout << "Antes de la ordenación" << std::endl;
-  p1.escribirPolinomio();
-
-  p1.ordenarPolinomio();
-  p2.ordenarPolinomio();
-  p3.ordenarPolinomio();
-
-  std::cout << "Despues de la ordenación" << std::endl;
-  p1.escribirPolinomio();
 
 	////////////////////////////////////////////////////////
 	// Operadores de asignación
@@ -308,29 +296,26 @@ void ed::testPolinomio()
 	p1.escribirPolinomio();
 	std::cout << std::endl << std::endl;
 
-	ed::Polinomio p4 = Polinomio(p3);
-	p2.leerPolinomio();
-
 	// Operador de división y asignación
-	std::cout<< "Operador p4 /= p2 "<< std::endl;
-	if ((p4.getGrado() >= p2.getGrado()) and (not p2.esNulo()))
+	std::cout<< "Operador p1 /= p2 "<< std::endl;
+	if ((p1.getGrado() >= p2.getGrado()) and (not p2.esNulo()))
 	{
-		std::cout<< "p4 = ";
-		p4.escribirPolinomio();
+		std::cout<< "p1 = ";
+		p1.escribirPolinomio();
 		std::cout << std::endl;
 		std::cout<< "p2 = ";
 		p2.escribirPolinomio();
 		std::cout << std::endl;
-		std::cout<< "Resultado p4 /= p2"<< std::endl;
-		p4 /= p2;
-		std::cout<< "p4 = ";
-		p4.escribirPolinomio();
+		std::cout<< "Resultado p1 /= p2"<< std::endl;
+		p1 /= p2;
+		std::cout<< "p1 = ";
+		p1.escribirPolinomio();
 		std::cout << std::endl << std::endl;
 	}
 	else
 	{
-		std::cout << "No se puede dividir p4 entre p2, porque: " << std::endl;
-		std::cout << "- el grado de p4 no es mayor o igual que el grado de p2" << std::endl;
+		std::cout << "No se puede dividir p1 entre p2, porque: " << std::endl;
+		std::cout << "- el grado de p1 no es mayor o igual que el grado de p2" << std::endl;
 		std::cout << "- o el polinomio p2 es nulo" << std::endl;
 	}
 
@@ -387,7 +372,6 @@ void ed::testPolinomio()
 	// Operador de división y asignación
 	std::cout<< "Operador p3 /= m "<< std::endl;
 	if (p3.getGrado() >= m.getGrado()){
-		std::cout << "Aqui entra" << std::endl;
 		p3 /= m;
 	}else{
 		std::cout << "No se puede dividir p3 entre m, porque el grado de p3 no es mayor o igual que el grado de m" << std::endl;
@@ -407,7 +391,7 @@ void ed::testPolinomio()
 	std::cout << RESET;
 	// Pausa
 	std::cin.ignore();
-/*
+
 	////////////////////////////////////////////////////////
 	// Entre un polinomio y un número
 	std::cout << BIGREEN;
@@ -477,15 +461,15 @@ void ed::testPolinomio()
 	std::cout<< "p1(" << x << ") = " << p1.calcularValor(x) << std::endl << std::endl;
 
 	std::cout<< "p2 = ";
-	p1.escribirPolinomio();
+	p2.escribirPolinomio();
 	std::cout << std::endl;
-	std::cout<< "p1(" << x << ") = " << p1.calcularValor(x) << std::endl << std::endl;
+	std::cout<< "p2(" << x << ") = " << p2.calcularValor(x) << std::endl << std::endl;
 
 	std::cout<< "p3 = ";
 	p3.escribirPolinomio();
 	std::cout << std::endl;
 	std::cout<< "p3(" << x << ") = " << p3.calcularValor(x) << std::endl << std::endl;
-*/
+
 
 	// Fin
 	return;
