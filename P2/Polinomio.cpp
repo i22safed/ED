@@ -345,16 +345,16 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Monomio const &m){
 		assert(m.getGrado() <= getGrado());
 	#endif
 
-	ed::Polinomio * cociente = new Polinomio();		// Polinomio a retornar
+	ed::Polinomio cociente = Polinomio();		// Polinomio a retornar
 	ed::Polinomio resultado = Polinomio(); 			// Resultado intermedio para restarlo al dividendo
 	ed::Monomio termino = Monomio();				// Variable auxiliar
 	int i=0;
 
 	while((polinomio_[i].getGrado() >= m.getGrado()) or getNumeroMonomios() == 0){
 
-		cociente->polinomio_[i] = this->polinomio_[0] / m;
+		cociente.polinomio_[i] = this->polinomio_[0] / m;
 
-		termino = cociente->polinomio_[i] * m;	// Cociente[i] * Divisor
+		termino = cociente.polinomio_[i] * m;	// Cociente[i] * Divisor
 		termino.setCoeficiente(termino.getCoeficiente() * (-1));	// Cambio de signo
 		resultado.polinomio_.push_back(termino);
 
@@ -381,8 +381,22 @@ ed::Polinomio & ed::Polinomio::operator/=(ed::Monomio const &m){
 			}
 		}
 
+		for(int x=0;x<getNumeroMonomios();x++){
+			if(this->polinomio_[x].getCoeficiente() == 0){
+				this->polinomio_.erase(polinomio_.begin() + x); // Todo polinomio cuyo coeficiente sea 0
+			}
+		}
+
 		i++;
 
+	}
+
+	polinomio_.clear();
+
+	for(int y=0;y<cociente.getNumeroMonomios();y++){
+		termino.setCoeficiente(cociente.polinomio_[y].getCoeficiente());
+		termino.setGrado(cociente.polinomio_[y].getGrado());
+		polinomio_.push_back(termino);
 	}
 
 	return *this; // Se devuelve el objeto actual
