@@ -27,14 +27,22 @@ namespace ed
 
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 	bool operator==(ed::Polinomio const & p1, ed::Polinomio const & p2);
+	bool operator==(ed::Polinomio const & p, ed::Monomio const & m);
+	bool operator==(ed::Monomio const & m, ed::Polinomio const & p);
+	bool operator==(ed::Polinomio const & p, double const & x);
+	bool operator==(double const & x, ed::Polinomio const & p);
 
-	// COMPLETAR LOS OTROS OPERADORES DE IGUALDAD
+	
 
 	////////////////////////////////////////////////////////////////////////////////////
 	//! \name Operadores de desigualdad
 
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 	bool operator!=(ed::Polinomio const & p1, ed::Polinomio const & p2);
+	bool operator!=(ed::Polinomio const & p, ed::Monomio const & m);
+	bool operator!=(ed::Monomio const & m, ed::Polinomio const & p);
+	bool operator!=(ed::Polinomio const & p, double const & x);
+	bool operator!=(double const & x, ed::Polinomio const & p);
 
 	// COMPLETAR LOS OTROS OPERADORES DE DESIGUALDAD
 
@@ -80,10 +88,10 @@ namespace ed
    //! \name Sobrecarga de los operadores de flujo de la clase Polinomio.
 
     // COMPLETAR LOS COMENTARIOS DE DOXYGEN
-    ostream &operator<<(ostream &stream, ed::Polinomio const &p);
-
-    // COMPLETAR LOS COMENTARIOS DE DOXYGEN
     istream &operator>>(istream &stream, ed::Polinomio &p);
+
+	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
+    ostream &operator<<(ostream &stream, ed::Polinomio &p);
 
 }  // Fin de namespace ed.
 

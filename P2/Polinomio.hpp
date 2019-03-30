@@ -179,6 +179,9 @@ class Polinomio: public ed::PolinomioInterfaz
 
 	double calcularValor(double const &x);
 
+	inline void limpiarPolinomio(){
+		this->polinomio_.clear();
+	}
 
 	inline bool sonIguales(Polinomio const &p){	// Comprueba que dos polinomios son iguales
 

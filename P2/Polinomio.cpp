@@ -102,7 +102,6 @@ ed::Polinomio & ed::Polinomio::operator+=(Polinomio const &p){
 		}
 	}
 
-
 	return *this;
 
 }

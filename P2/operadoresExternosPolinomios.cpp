@@ -16,26 +16,38 @@
 namespace ed
 {
 
-bool operator==(ed::Polinomio const & p1, ed::Polinomio const & p2)
-{
-	// COMPLETAR Y MODIFICAR
-
-	// MODIFICAR: SE DEVUELVE UN VALOR ARBITRARIO PARA NO GENERAR AVISOS AL COMPILAR
-		return false;
+bool operator==(ed::Polinomio const & p1, ed::Polinomio const & p2){
+	return false;
 }
-
-// COMPLETAR LOS OTROS OPERADORES DE IGUALDAD
-
-
+bool operator==(ed::Polinomio const & p, ed::Monomio const & m){
+	return false;
+}
+bool operator==(ed::Monomio const & m, ed::Polinomio const & p){
+	return false;
+}
+bool operator==(ed::Polinomio const & p, double const & x){
+	return false;
+}
+bool operator==(double const & x, ed::Polinomio const & p){
+	return false;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Operadores de desigualdad
-bool operator!=(ed::Polinomio const & p1, ed::Polinomio const & p2)
-{
-	// COMPLETAR Y MODIFICAR
-
-	// MODIFICAR: SE DEVUELVE UN VALOR ARBITRARIO PARA NO GENERAR AVISOS AL COMPILAR
+bool operator!=(ed::Polinomio const & p1, ed::Polinomio const & p2){
 	return true;
+}
+bool operator!=(ed::Polinomio const & p, ed::Monomio const & m){
+	return false;
+}
+bool operator!=(ed::Monomio const & m, ed::Polinomio const & p){
+	return false;
+}
+bool operator!=(ed::Polinomio const & p, double const & x){
+	return false;
+}
+bool operator!=(double const & x, ed::Polinomio const & p){
+	return false;
 }
 
 // COMPLETAR LOS OTROS OPERADORES DE DESIGUALDAD
@@ -94,23 +106,43 @@ ed::Polinomio & operator+(ed::Polinomio const &p1,  ed::Polinomio const &p2)
 ////////////////////////////////////////////////////////////////////////////
 
 // Sobrecarga del operador de entrada
-istream &operator>>(istream &stream, Polinomio &p)
-{
-	// COMPLETAR
+istream &operator>>(istream &stream, Polinomio &p){
 
-	// Se devuelve el flujo de entrada
-  return stream;
+	double coeficiente = 0;
+	int grado = 0;
+	ed::Monomio m;
+	bool check = true;
+
+	while(check){
+
+		stream >> coeficiente >> grado; 
+
+		if((coeficiente==0) or (grado < 0)){
+			check = false;
+		}else{
+			m.setCoeficiente(coeficiente);
+			m.setGrado(grado);
+			p+=m;
+		}
+	}
+
+	return stream;
+
 }
 
-
-
 // Sobrecarga del operador de salida
-ostream &operator<<(ostream &stream, Polinomio const &p)
-{
-	// COMPLETAR
+ostream &operator<<(ostream &stream, Polinomio &p){
 
-	// Se devuelve el flujo de salida
-  return stream;
+	ed::Monomio m;
+
+	for(int i=p.getGrado();i>=0;i--){
+		if(p.existeMonomio(i)){
+			m = p.getMonomio(i);
+			std::cout << m << " ";
+		}
+	}	
+	return stream;
+
 }
 
 
