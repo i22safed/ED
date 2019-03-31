@@ -8,8 +8,9 @@
 #include <iostream>
 
 #include "operadoresExternosPolinomios.hpp"
-
 #include "operadoresExternosMonomios.hpp"
+#include "Polinomio.hpp"
+
 
 // Se incluyen los operadores sobrecargados dentro del espacio de nombres de ed
 
@@ -17,38 +18,162 @@ namespace ed
 {
 
 bool operator==(ed::Polinomio const & p1, ed::Polinomio const & p2){
-	return false;
+	
+	bool valorDevuelto = true;
+	ed::Monomio m1,m2;
+	
+
+	if(p1.getGrado() != p2.getGrado()){
+		valorDevuelto = false; 
+	}
+
+	if(p1.getNumeroMonomios() != p2.getNumeroMonomios()){
+		valorDevuelto = false; 
+	
+	}else{ 	// Aqui suponemos que ambos tienen el mismo numero de 
+			// monomios 
+		
+		for(int i=0;i<p1.getNumeroMonomios();i++){
+			m1 = p1.getIndice(i);
+			m2 = p2.getIndice(i);
+
+			if((std::abs(m1.getCoeficiente() - m2.getCoeficiente()) > COTA_ERROR) or (m1.getGrado() != m2.getGrado())){
+				valorDevuelto = false; 
+			}
+
+		}
+	}
+
+	#ifndef NDEBUG 
+		assert(valorDevuelto ==  (p1.getNumeroMonomios() == p2.getNumeroMonomios()));
+	#endif
+
+	return valorDevuelto;
+
 }
 bool operator==(ed::Polinomio const & p, ed::Monomio const & m){
-	return false;
+	
+	bool valorDevuelto = true; 
+	ed::Monomio p0 = p.getIndice(0);
+
+	if(p.getNumeroMonomios() != 1){
+		valorDevuelto = false; 
+	}else{
+
+		if((std::abs(p0.getCoeficiente() - m.getCoeficiente()) > COTA_ERROR) or (p0.getGrado() != m.getGrado())){
+				valorDevuelto = false; 
+		}
+	}
+	return valorDevuelto;
 }
+
 bool operator==(ed::Monomio const & m, ed::Polinomio const & p){
-	return false;
+	
+	bool valorDevuelto = true; 
+	ed::Monomio p0 = p.getIndice(0);
+
+	if(p.getNumeroMonomios() != 1){
+		valorDevuelto = false; 
+	}else{
+
+		if((std::abs(m.getCoeficiente() - p0.getCoeficiente()) > COTA_ERROR) or (m.getGrado() != p0.getGrado())){
+				valorDevuelto = false; 
+		}
+	}
+	return valorDevuelto;
+
 }
 bool operator==(ed::Polinomio const & p, double const & x){
-	return false;
+	
+	bool valorDevuelto = true; 
+	ed::Monomio p0 = p.getIndice(0);
+
+	if(p.getNumeroMonomios() != 1){
+		valorDevuelto = false; 
+	}else{
+
+		if((std::abs(x - p0.getCoeficiente()) > COTA_ERROR) or (p0.getGrado() != 0)){
+				valorDevuelto = false; 
+		}
+	}
+	return valorDevuelto;
+
 }
+
 bool operator==(double const & x, ed::Polinomio const & p){
-	return false;
+	
+	bool valorDevuelto = true; 
+	ed::Monomio p0 = p.getIndice(0);
+
+	if(p.getNumeroMonomios() != 1){
+		valorDevuelto = false; 
+	}else{
+
+		if((std::abs(p0.getCoeficiente()-x) > COTA_ERROR) or (p0.getGrado() != 0)){
+				valorDevuelto = false; 
+		}
+	}
+	return valorDevuelto;
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Operadores de desigualdad
-bool operator!=(ed::Polinomio const & p1, ed::Polinomio const & p2){
-	return true;
-}
-bool operator!=(ed::Polinomio const & p, ed::Monomio const & m){
-	return false;
-}
-bool operator!=(ed::Monomio const & m, ed::Polinomio const & p){
-	return false;
-}
-bool operator!=(ed::Polinomio const & p, double const & x){
-	return false;
-}
-bool operator!=(double const & x, ed::Polinomio const & p){
-	return false;
-}
+
+	bool operator!=(ed::Polinomio const & p1, ed::Polinomio const & p2){
+		
+		bool valorDevuelto = true; 
+
+		if((p1 == p2) == false){
+			valorDevuelto = false; 
+		}
+		
+		return valorDevuelto;
+	}
+
+	bool operator!=(ed::Polinomio const & p, ed::Monomio const & m){
+		
+		bool valorDevuelto = true; 
+
+		if((p == m) == false){
+			valorDevuelto = false; 
+		}
+		
+		return valorDevuelto;
+	}
+
+	bool operator!=(ed::Monomio const & m, ed::Polinomio const & p){
+		
+		bool valorDevuelto = true; 
+
+		if((m == p) == false){
+			valorDevuelto = false; 
+		}
+		
+		return valorDevuelto;
+	}
+	
+	bool operator!=(ed::Polinomio const & p, double const & x){
+		
+		bool valorDevuelto = true; 
+
+		if((p == x) == false){
+			valorDevuelto = false; 
+		}
+		
+		return valorDevuelto;
+	}
+	
+	bool operator!=(double const & x, ed::Polinomio const & p){
+		
+		bool valorDevuelto = true; 
+
+		if((x == p) == false){
+			valorDevuelto = false; 
+		}
+		
+		return valorDevuelto;
+	}
 
 // COMPLETAR LOS OTROS OPERADORES DE DESIGUALDAD
 
@@ -56,51 +181,246 @@ bool operator!=(double const & x, ed::Polinomio const & p){
 
 // Operadores unarios
 
-// COMPLETAR
-ed::Polinomio & operator+(ed::Polinomio const & p)
-{
-	// COMPLETAR Y MODIFICAR
-	// Se crea un nuevo objeto
-	ed::Polinomio *nuevo = new ed::Polinomio(p);
+ed::Polinomio & operator+(ed::Polinomio const & p){
+	
+	ed::Polinomio * nuevo = new ed::Polinomio(p);
 
-	// Se devuelve el resultado
+	#ifndef NDEBUG 
+		assert(nuevo->sonIguales(p));
+	#endif
+
 	return *nuevo;
 }
 
+ed::Polinomio & operator-(ed::Polinomio const & p){
+	
+	ed::Polinomio * nuevo = new ed::Polinomio();
+	ed::Monomio m; 
 
-// COMPLETAR EL OTRO OPERADOR UNARIO PREFIJO: resta
+	for(int i=0;i<p.getNumeroMonomios();i++){
+		m = p.getIndice(i);
+		m.setCoeficiente(m.getCoeficiente() * (-1));
+		nuevo->anadirMonomio(m);
+	}
+
+	return *nuevo;
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////
 
 // Operadores binarios de la suma
-ed::Polinomio & operator+(ed::Polinomio const &p1,  ed::Polinomio const &p2)
-{
-	// COMPLETAR Y MODIFICAR
-	// Se crea un nuevo objeto
-	ed::Polinomio *nuevo = new ed::Polinomio;
+	ed::Polinomio & operator+(ed::Polinomio const &p1,  ed::Polinomio const &p2){
+		
+		ed::Polinomio res; 
+		res+=p1;
+		res+=p2;		
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+		
+		return *nuevo;
+	}
 
-	// Se devuelve el resultado
-	return *nuevo;
-}
+	ed::Polinomio & operator+(ed::Polinomio const &p,  ed::Monomio const &m){
+		
+		ed::Polinomio res; 
+		res+=p;
+		res+=m;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
 
-	// COMPLETAR LOS OTROS OPERADORES DE SUMA
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator+(ed::Monomio const &m,  ed::Polinomio const &p){
+		
+		ed::Polinomio res; 
+		res+=m;
+		res+=p;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+		
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator+(ed::Polinomio const &p,  double const &x){
+		
+		ed::Polinomio res; 
+		res+=p;
+		res+=x;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator+(double const &x,  ed::Polinomio const &p){
+		
+		ed::Polinomio res; 
+		res+=x;
+		res+=p;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+
 
 	////////////
 	// Resta
+	ed::Polinomio & operator-(ed::Polinomio const &p1,  ed::Polinomio const &p2){
+		
+		ed::Polinomio res; 
+		res+=p1;
+		res-=p2;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
 
-	// COMPLETAR
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator-(ed::Polinomio const &p,  ed::Monomio const &m){
+		
+		ed::Polinomio res; 
+		res+=p;
+		res-=m;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator-(ed::Monomio const &m,  ed::Polinomio const &p){
+		
+		ed::Polinomio res; 
+		res+=m;
+		res-=p;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator-(ed::Polinomio const &p,  double const &x){
+		
+		ed::Polinomio res; 
+		res+=p;
+		res-=x;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator-(double const &x,  ed::Polinomio const &p){
+		
+		ed::Polinomio res; 
+		res+=x;
+		res-=p;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+	
 
 
 	//////////////////
 	// Multiplicación
 
-	// COMPLETAR
+	ed::Polinomio & operator*(ed::Polinomio const &p1,  ed::Polinomio const &p2){
+	
+		ed::Polinomio res; 
+		res+=p1;
+		res*=p2;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator*(ed::Polinomio const &p,  ed::Monomio const &m){
+		
+		ed::Polinomio res; 
+		res+=p;
+		res*=m;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator*(ed::Monomio const &m,  ed::Polinomio const &p){
+		
+		ed::Polinomio res; 
+		res+=m;
+		res*=p;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator*(ed::Polinomio const &p,  double const &x){
+		
+		ed::Polinomio res; 
+		res+=p;
+		res*=x;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator*(double const &x,  ed::Polinomio const &p){
+		
+		ed::Polinomio res; 
+		res+=x;
+		res*=p;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+	
 
 	////////////
 	// División
 
-	// COMPLETAR
+	ed::Polinomio & operator/(ed::Polinomio const &p1,  ed::Polinomio const &p2){
+		
+		ed::Polinomio res; 
+		res+=p1;
+		res/=p2;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator/(ed::Polinomio const &p,  ed::Monomio const &m){
+		
+		ed::Polinomio res; 
+		res+=p;
+		res/=m;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator/(ed::Monomio const &m,  ed::Polinomio const &p){
+		
+		ed::Polinomio res; 
+		res+=m;
+		res/=p;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator/(ed::Polinomio const &p,  double const &x){
+		
+		ed::Polinomio res; 
+		res+=p;
+		res/=x;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
+
+	ed::Polinomio & operator/(double const &x,  ed::Polinomio const &p){
+		
+		ed::Polinomio res; 
+		res+=x;
+		res/=p;
+		ed::Polinomio *nuevo = new ed::Polinomio(res);
+
+		return *nuevo;
+	}
 
 
 ////////////////////////////////////////////////////////////////////////////

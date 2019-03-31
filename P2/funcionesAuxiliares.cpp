@@ -545,8 +545,6 @@ void ed::operadoresExternosPolinomios()
 	// Pausa
 	std::cin.ignore();
 
-/*
-
 	// Operadores que no son miembros de la clase
 	std::cout << BIGREEN;
 	std::cout<< "Operadores que no son miembros de la clase" << std::endl << std::endl;
@@ -565,6 +563,8 @@ void ed::operadoresExternosPolinomios()
 		std::cout << " no es igual que ";
 
     std::cout << "p2 = " << p2 << std::endl << std::endl;
+
+
 
 	//
 	std::cout<< "Igualdad: p1 == m" << std::endl;
@@ -609,6 +609,7 @@ void ed::operadoresExternosPolinomios()
 		std::cout << " no es igual que ";
 
 	std::cout << "p1 = " << p1 << std::endl << std::endl;
+
 
 
 	// Desigualdad
@@ -819,6 +820,6 @@ void ed::operadoresExternosPolinomios()
 
 
 	std::cout << std::endl;
-*/
+
 	return;
 }

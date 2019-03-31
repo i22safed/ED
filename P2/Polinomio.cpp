@@ -171,7 +171,7 @@ ed::Polinomio & ed::Polinomio::operator-=(ed::Polinomio const &p){
 	return *this; // Se devuelve el objeto actual
 }
 
-ed::Polinomio & ed::Polinomio::operator-=(ed::Monomio &m){
+ed::Polinomio & ed::Polinomio::operator-=(ed::Monomio const &m){
 
 	if(existeMonomio(m.getGrado())){
 
@@ -183,8 +183,7 @@ ed::Polinomio & ed::Polinomio::operator-=(ed::Monomio &m){
 		}
 
 	}else{
-		m.setCoeficiente(m.getCoeficiente() * (-1));
-		this->polinomio_.push_back(m);
+		this->polinomio_.push_back(-m);
 	}
 
 	for(int x=0;x<getNumeroMonomios();x++){

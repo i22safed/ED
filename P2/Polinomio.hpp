@@ -75,7 +75,7 @@ class Polinomio: public ed::PolinomioInterfaz
 
 	}
 
-	inline int getGrado() {
+	inline int getGrado() const {
 
 		int max = 0;
 
@@ -127,6 +127,15 @@ class Polinomio: public ed::PolinomioInterfaz
 
 	}
 
+	inline Monomio getIndice(int indice) const {
+		return this->polinomio_[indice];
+	}
+
+	inline void anadirMonomio(Monomio const &m){
+		this->polinomio_.push_back(m);
+		return; 
+	}
+
 
 
 	//! \name Funciones de modificación de la clase Polinomio
@@ -149,7 +158,7 @@ class Polinomio: public ed::PolinomioInterfaz
 
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
 	Polinomio & operator-=(Polinomio const &p);
-	Polinomio & operator-=(Monomio &m); // Ya que si no existe el monomio hay que meterlo (modificarlo) negativo
+	Polinomio & operator-=(Monomio const &m); // Ya que si no existe el monomio hay que meterlo (modificarlo) negativo
 	Polinomio & operator-=(double const &x);
 
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
@@ -188,9 +197,7 @@ class Polinomio: public ed::PolinomioInterfaz
 		bool valorDevuelto = true;
 
 		if(getNumeroMonomios() != p.getNumeroMonomios()){
-		
 			return false;
-		
 		}
 
 		for(int i=0;i<getNumeroMonomios();i++){

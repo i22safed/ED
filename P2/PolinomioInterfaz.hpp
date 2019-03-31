@@ -8,6 +8,7 @@
 
 #include "Monomio.hpp"
 
+
 // Se incluye la clase PolinomioInterfaz dentro del espacio de nombre de la asigantura: ed
 namespace ed {
 
@@ -22,20 +23,20 @@ class PolinomioInterfaz
 
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
   //Descomentar
-	//virtual bool esNulo() const = 0;
+	virtual bool esNulo() const = 0;
 
   // COMPLETAR LOS COMENTARIOS DE DOXYGEN
   //Descomentar
-	//virtual int getGrado()const = 0;
+	virtual int getGrado()const = 0;
 
   // COMPLETAR LOS COMENTARIOS DE DOXYGEN
   //Descomentar
-	//virtual int getNumeroMonomios()const = 0;
+	virtual int getNumeroMonomios()const = 0;
 
 
   // COMPLETAR LOS COMENTARIOS DE DOXYGEN
   //Descomentar
-	//virtual bool existeMonomio(int n)const = 0;
+  virtual bool existeMonomio(int n)const = 0;
 
 
   // COMPLETAR LOS COMENTARIOS DE DOXYGEN

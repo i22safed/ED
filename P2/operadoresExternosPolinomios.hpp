@@ -50,38 +50,48 @@ namespace ed
 
 	//! \name Operadores unarios
 
-	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
-		ed::Polinomio & operator+(ed::Polinomio const & p);
-
-	// COMPLETAR EL OTRO OPERADOR UNARIO PREFIJO: resta
-
+	ed::Polinomio & operator+(ed::Polinomio const & p);
+	ed::Polinomio & operator-(ed::Polinomio const & p); 
 
 //////////////////////////////////////////////////////////////////////////////////////
 
 	//! \name Operadores binarios de la suma
 
 	// COMPLETAR LOS COMENTARIOS DE DOXYGEN
-		ed::Polinomio & operator+(ed::Polinomio const &p1,  ed::Polinomio const &p2);
+	ed::Polinomio & operator+(ed::Polinomio const &p1,  ed::Polinomio const &p2);
+	ed::Polinomio & operator+(ed::Polinomio const &p,  ed::Monomio const &m);
+	ed::Polinomio & operator+(ed::Monomio const &m,  ed::Polinomio const &p);
+	ed::Polinomio & operator+(ed::Polinomio const &p,  double const &x);
+	ed::Polinomio & operator+(double const &x,  ed::Polinomio const &p);
 
-		// COMPLETAR LOS OTROS OPERADORES DE SUMA
+	//////////////////////////////////////////////////////////
+	//! \name Operador binario de la resta
+
+	ed::Polinomio & operator-(ed::Polinomio const &p1,  ed::Polinomio const &p2);
+	ed::Polinomio & operator-(ed::Polinomio const &p,  ed::Monomio const &m);
+	ed::Polinomio & operator-(ed::Monomio const &m,  ed::Polinomio const &p);
+	ed::Polinomio & operator-(ed::Polinomio const &p,  double const &x);
+	ed::Polinomio & operator-(double const &x,  ed::Polinomio const &p);
 
 
-		//////////////////////////////////////////////////////////
-		//! \name Operador binario de la resta
+	///////////////////////////////////////////////////////////////////////////
+	//! \name Operadores binarios de la multiplicación
 
-		// COMPLETAR
+	ed::Polinomio & operator*(ed::Polinomio const &p1,  ed::Polinomio const &p2);
+	ed::Polinomio & operator*(ed::Polinomio const &p,  ed::Monomio const &m);
+	ed::Polinomio & operator*(ed::Monomio const &m,  ed::Polinomio const &p);
+	ed::Polinomio & operator*(ed::Polinomio const &p,  double const &x);
+	ed::Polinomio & operator*(double const &x,  ed::Polinomio const &p);
 
+	///////////////////////////////////////////////////////////////////////////
 
-		///////////////////////////////////////////////////////////////////////////
-		//! \name Operadores binarios de la multiplicación
+	//! \name Operadores binarios de la división
 
-		// COMPLETAR
-
-		///////////////////////////////////////////////////////////////////////////
-
-		//! \name Operadores binarios de la división
-
-		// COMPLETAR
+	ed::Polinomio & operator/(ed::Polinomio const &p1,  ed::Polinomio const &p2);
+	ed::Polinomio & operator/(ed::Polinomio const &p,  ed::Monomio const &m);
+	ed::Polinomio & operator/(ed::Monomio const &m,  ed::Polinomio const &p);
+	ed::Polinomio & operator/(ed::Polinomio const &p,  double const &x);
+	ed::Polinomio & operator/(double const &x,  ed::Polinomio const &p);
 
 	/////////////////////////////////////////////////////////////////////////////
 
