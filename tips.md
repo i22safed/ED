@@ -28,3 +28,10 @@ this puntero al objeto actual, debe de llevar flecha
 
 + La función leerMonomio puede ser más amigable indicando que no se puede introducir un grado negativo.
 
+#### P3 
+
+Caso 1. Hoja 
+Caso 2. Padre con hijo izquierdo → Sube hijo al lugar de padre 
+Caso 3. Padre con hijo derecho → Sube hijo al lugar de padre 
+Caso 4. Hijo a izquierdas y derechas → Sube el mayor (si es izquierda) o el menor (si es derecha) del 
+                                        subarbol

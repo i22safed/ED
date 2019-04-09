@@ -44,60 +44,54 @@ namespace ed
 			}
 
 			/*!\brief Observadores.*/
-			const G & getInfo() const
-			{
+			const G & getInfo() const{
+				return _info;
+			}
+
+			NodoArbolBinario *getIzquierdo() const{
+				return _izquierdo;
+			}
+
+			NodoArbolBinario *getDerecho() const{
+				return _derecho; 
+			}
+
+			bool esHoja() const{
+				bool valorDevuelto = false; 
+				
+				if((getIzquierdo() != NULL) || (getDerecho()!=NULL)){
+					valorDevuelto = true;
+				}
+				
+				return valorDevuelto;
+			}
+
+			void recorridoPreOrden (OperadorNodo<G> &operador) const{
 				// TODO
 			}
 
-			NodoArbolBinario *getIzquierdo() const
-			{
+			void recorridoPostOrden (OperadorNodo<G> &operador) const{
 				// TODO
 			}
 
-			NodoArbolBinario *getDerecho() const
-			{
-				// TODO
-			}
-
-			bool esHoja() const
-			{
-				// TODO
-				return false;
-			}
-
-			void recorridoPreOrden (OperadorNodo<G> &operador) const
-			{
-				// TODO
-			}
-
-			void recorridoPostOrden (OperadorNodo<G> &operador) const
-			{
-				// TODO
-			}
-
-			void recorridoInOrden (OperadorNodo<G> &operador) const
-			{
+			void recorridoInOrden (OperadorNodo<G> &operador) const{
 				// TODO
 			}
 
 			/*!\brief Modificadores. */
-			void setInfo(const G &info)
-			{
-				// TODO
+			void setInfo(const G &info){
+				_info = info;
 			}
 
-			void setIzquierdo(NodoArbolBinario *n)
-			{
-				// TODO
+			void setIzquierdo(NodoArbolBinario *n){
+				_izquierdo = n; 
 			}
 
-			void setDerecho(NodoArbolBinario *n)
-			{
-				// TODO
+			void setDerecho(NodoArbolBinario *n){
+				_derecho = n;
 			}
 
-			NodoArbolBinario & operator=(const NodoArbolBinario &n)
-			{
+			NodoArbolBinario & operator=(const NodoArbolBinario &n){
 				// TODO
 			}
 
