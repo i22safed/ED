@@ -20,27 +20,41 @@ namespace ed
 	\pre G debe tener definidos los operadores < y ==.
 	*/
 	template<class G>
-	class ArbolBinarioOrdenadoEnlazado:public ArbolBinarioOrdenado<G>
-	{
+	class ArbolBinarioOrdenadoEnlazado:public ArbolBinarioOrdenado<G>{
+
 	private:
 
 		/*!\brief Define un nodo del arbol binario.*/
-		class NodoArbolBinario
-		{
+		class NodoArbolBinario{
+
 		private:
 			G _info;  //Valor informativo almacenado en el nodo
 			NodoArbolBinario * _izquierdo;  //Puntero al hijo izquierdo
 			NodoArbolBinario * _derecho;  //Puntero al hijo derecho
 
 		public:
-			NodoArbolBinario (const G &info)
-			{
-				// TODO
+			NodoArbolBinario (const G &info){
+				setInfo(info);
+				setIzquierdo(NULL);
+				setDerecho(NULL);
+
+				#ifndef NDEBUG 
+					assert((getIzquierdo() == NULL) || (getDerecho() == NULL));
+				#endif 
 			}
 
-			NodoArbolBinario (const NodoArbolBinario &n)
-			{
-				// TODO
+			NodoArbolBinario (const NodoArbolBinario &n){
+				
+				setInfo(n.getInfo());
+				setIzquierdo(n.getIzquierdo());
+				setDerecho(n.getIzquierdo());
+				
+				#ifndef NDEBUG // Cambiar por el operador == 
+					assert((getInfo() == n.getInfo()) and 
+								(getIzquierdo() == n.getIzquierdo()) and 
+								(getDerecho() == n.getDerecho()));
+				#endif  
+
 			}
 
 			/*!\brief Observadores.*/
@@ -48,15 +62,16 @@ namespace ed
 				return _info;
 			}
 
-			NodoArbolBinario *getIzquierdo() const{
+			NodoArbolBinario * getIzquierdo() const{
 				return _izquierdo;
 			}
 
-			NodoArbolBinario *getDerecho() const{
+			NodoArbolBinario * getDerecho() const{
 				return _derecho; 
 			}
 
 			bool esHoja() const{
+				
 				bool valorDevuelto = false; 
 				
 				if((getIzquierdo() != NULL) || (getDerecho()!=NULL)){
@@ -67,7 +82,7 @@ namespace ed
 			}
 
 			void recorridoPreOrden (OperadorNodo<G> &operador) const{
-				// TODO
+				
 			}
 
 			void recorridoPostOrden (OperadorNodo<G> &operador) const{
@@ -84,15 +99,23 @@ namespace ed
 			}
 
 			void setIzquierdo(NodoArbolBinario *n){
-				_izquierdo = n; 
+				_izquierdo = n.getIzquierdo(); 
 			}
 
 			void setDerecho(NodoArbolBinario *n){
-				_derecho = n;
+				_derecho = n.getDerecho();
 			}
 
 			NodoArbolBinario & operator=(const NodoArbolBinario &n){
-				// TODO
+				
+				NodoArbolBinario * nodo = new NodoArbolBinario();
+
+				setInfo(n.getInfo());
+				setIzquierdo(n.getIzquierdo());
+				setDerecho(n.getDerecho());
+			
+				return * nodo;
+
 			}
 
 		}; //Fin clase NodoArbolBinario
@@ -104,85 +127,70 @@ namespace ed
 
 	public:
 
-		ArbolBinarioOrdenadoEnlazado ()
-		{
+		ArbolBinarioOrdenadoEnlazado (){
 			// TODO
 		}
 
-		ArbolBinarioOrdenadoEnlazado (const ArbolBinarioOrdenadoEnlazado<G>& a)
-		{
+		ArbolBinarioOrdenadoEnlazado (const ArbolBinarioOrdenadoEnlazado<G>& a){
 			// TODO
 		}
 
-		~ArbolBinarioOrdenadoEnlazado ()
-		{
+		~ArbolBinarioOrdenadoEnlazado (){
 			if (not estaVacio())
 			borrarArbol();
 			cout << "Destructor Usado \n";
 		}
 
-		ArbolBinarioOrdenadoEnlazado &operator=(const ArbolBinarioOrdenadoEnlazado& a)
-		{
+		ArbolBinarioOrdenadoEnlazado &operator=(const ArbolBinarioOrdenadoEnlazado& a){
 			// TODO
 		}
 
-		bool insertar(const G &x)
-		{
+		bool insertar(const G &x){
 			// TODO
 			return false;
 		}
 
-		void borrarArbol()
-		{
+		void borrarArbol(){
 			// TODO
 		}
 
-		bool borrar()
-		{
+		bool borrar(){
 			// TODO
 			return false;
 		}
 
-		void recorridoPreOrden (OperadorNodo<G> &operador) const
-		{
+		void recorridoPreOrden (OperadorNodo<G> &operador) const{
 			// TODO
 		}
 
-		void recorridoPostOrden (OperadorNodo<G> &operador) const
-		{
+		void recorridoPostOrden (OperadorNodo<G> &operador) const{
 			// TODO
 		}
 
-		void recorridoInOrden (OperadorNodo<G> &operador) const
-		{
+		void recorridoInOrden (OperadorNodo<G> &operador) const{
 			// TODO
 		}
 
-		bool buscar(const G& x) const
-		{
+		bool buscar(const G& x) const{
 			// TODO
 			return false;
 		}
 
-		bool estaVacio() const
-		{
+		bool estaVacio() const{
 			// TODO
 			return false;
 		}
 
-		G raiz() const
-		{
+		G raiz() const{
 			// TODO
 		}
 
-		bool existeActual() const
-		{
+		bool existeActual() const{
 			// TODO
 			return false;
 		}
 
-		G actual() const
-		{
+		G actual() const{
 			// TODO
 		}
 
