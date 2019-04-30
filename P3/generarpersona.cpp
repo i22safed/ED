@@ -222,7 +222,7 @@ Persona generarDatosPersonales()
 {
   Persona persona;
 
-  persona.dni(generarEnteroAleatorio(20000000, 70000000));
+  persona.dni(generarEnteroAleatorio(200, 700));
   persona.apellido(_apellidos[generarEnteroAleatorio(0, NUMEROAPELLIDOS - 1)]);
   persona.nombre(_nombres[generarEnteroAleatorio(0, NUMERONOMBRES - 1)]);
   persona.borrado('n');

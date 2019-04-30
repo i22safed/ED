@@ -72,13 +72,13 @@ istream &operator>>(istream &stream, Persona &p)
 {
 	char aux[30];
 	int dni;
-	cout << "Nombre: ";
+	cout << "\n\tNOMBRE: ";
 	stream >> aux;
 	p.nombre(aux);
-	cout << "Apellido: ";
+	cout << "\n\tAPELLIDO: ";
 	stream >> aux;
 	p.apellido(aux);
-	cout << "Dni: ";
+	cout << "\n\tDNI: ";
 	stream >> dni;
 	p.dni(dni);
 
