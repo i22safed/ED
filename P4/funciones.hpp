@@ -28,8 +28,8 @@ int menu()
 }
 
 template <class G_Nodo, class G_Lado>
-bool cargarGrafo(Grafo<G_Nodo, G_Lado> * &g)
-{
+bool cargarGrafo(Grafo<G_Nodo, G_Lado> * &g){
+
   string ficheroMatriz, ficheroEtiquetas;
 
   cout << "Fichero de la matriz de conexion: ";
@@ -43,8 +43,7 @@ bool cargarGrafo(Grafo<G_Nodo, G_Lado> * &g)
 }
 
 template <class G_Nodo, class G_Lado>
-void algoritmoFloyd(const Grafo<G_Nodo, G_Lado> &g)
-{
+void algoritmoFloyd(const Grafo<G_Nodo, G_Lado> &g){
   // TODO
 }
 

@@ -35,3 +35,7 @@ Caso 2. Padre con hijo izquierdo → Sube hijo al lugar de padre
 Caso 3. Padre con hijo derecho → Sube hijo al lugar de padre 
 Caso 4. Hijo a izquierdas y derechas → Sube el mayor (si es izquierda) o el menor (si es derecha) del 
                                         subarbol
+
+#### P4
+
+· Solo se toca grafo.hpp y funciones.hpp

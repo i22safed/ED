@@ -9,23 +9,21 @@
 
 using namespace ed;
 
+void mostrar(ArbolBinarioOrdenadoEnlazado<int> &a);
+void buscar(ArbolBinarioOrdenadoEnlazado<int> &a);
+void borrar(ArbolBinarioOrdenadoEnlazado<int> &a);
+void borrarArbol(ArbolBinarioOrdenadoEnlazado<int> &a);
+
 int main(){
 
-  ArbolBinarioOrdenadoEnlazado<Persona> a;
-  Persona p;
-  EscribirNodo<Persona> op;
+  ArbolBinarioOrdenadoEnlazado<int> a;
+  EscribirNodo<int> op;
 
-  int n = 0;  // Numero de personas a generar 
-
-  // Limpia la terminal completamente
-  std::cout << BIBLUE;
-  std::cout<< "\n Numero de persona a generar → ";
-  std::cin >> n;
-  std::cout << RESET;
+  int secuencia[] = {10,5,1,9,7,6,8,20,15,25,22,27};
 
   // Generamos personas 
-  for(int i=0; i < n; i++){
-    a.insertar(generarDatosPersonales());
+  for(int i=0; i < 12; i++){
+    a.insertar(secuencia[i]);
   }
 
   int opcion = 0;
@@ -50,7 +48,7 @@ int main(){
       std::cout << "2. Buscar\n";
 
       PLACE(posicion++,5);
-      std::cout << "3. Borrar persona\n";
+      std::cout << "3. Borrar nodo\n";
 
       PLACE(posicion++,5);
       std::cout << "4. Borrar arbol\n";
@@ -88,33 +86,33 @@ int main(){
 
 }
 
-void mostrar(ed::ArbolBinarioOrdenadoEnlazado<Persona> &a){
+void mostrar(ed::ArbolBinarioOrdenadoEnlazado<int> &a){
 
   /*
     Hace los distintos recorridos mostrando la info de 
     cada uno de los nodos 
   */
   std::cout << CLEAR_SCREEN;
-  EscribirNodo<Persona> op;
+  EscribirNodo<int> op;
 
   std::cout<<" Mostrar arbol\n\n";
   std::cout<< BIWHITE;
   
-  std::cout<<" Recorrido ";
+  std::cout<<"\n Recorrido ";
   std::cout<< BICYAN;
   std::cout<<"PreOrden\n\n  ";
   std::cout<< RESET;
   a.recorridoPreOrden(op);
   std::cout<<"\n";
 
-  std::cout<<" Recorrido ";
+  std::cout<<"\n Recorrido ";
   std::cout<< BIGREEN;
   std::cout<<"InOrden\n\n  ";
   std::cout<< RESET;
   a.recorridoInOrden(op);
   std::cout<<"\n";
 
-  std::cout<<" Recorrido ";
+  std::cout<<"\n Recorrido ";
   std::cout<< BIRED;
   std::cout<<"PostOrden\n\n  ";
   std::cout<< RESET;
@@ -122,30 +120,30 @@ void mostrar(ed::ArbolBinarioOrdenadoEnlazado<Persona> &a){
   std::cout<<"\n";
 
   std::cout<< BIBLUE;
-  std::cout<<" Pulse intro para volver al menú.";
+  std::cout<<"\n Pulse intro para volver al menú.";
 
   std::cin.get();
   std::cin.ignore();
 }
 
-void buscar(ArbolBinarioOrdenadoEnlazado<Persona> &a){
+void buscar(ArbolBinarioOrdenadoEnlazado<int> &a){
 
   /*
     La función buscar se encarga de retorna la existencia
     o no del nodo en cuestion 
   */
 
-  Persona p;
+  int p;
 
   std::cout<< BIWHITE;
-  std::cout<<"\n\tBuscar persona \n\n";
+  std::cout<<"\n\tBuscar numero \n\n";
 
-  std::cout<<"\tPersona a buscar → \n";
+  std::cout<<"\tNumero a buscar → ";
   std::cin>>p;
 
   if(a.buscar(p)){
     std::cout << BIGREEN;
-    std::cout<<"\n\tPersona encontrada\n";
+    std::cout<<"\n\tNumero encontrado\n";
     
     std::cout<< BIBLUE;
     std::cout<<"\n Pulse intro para volver al menú.";
@@ -155,7 +153,7 @@ void buscar(ArbolBinarioOrdenadoEnlazado<Persona> &a){
   }else{
   
     std::cout << BIRED;
-    std::cout<<"\n\tPersona no encontrada\n";
+    std::cout<<"\n\tNumero no encontrado\n";
     std::cout<< BIBLUE;
     std::cout<<"\n Pulse intro para volver al menú.";
     std::cin.get();
@@ -164,21 +162,21 @@ void buscar(ArbolBinarioOrdenadoEnlazado<Persona> &a){
   }
 }
 
-void borrar(ArbolBinarioOrdenadoEnlazado<Persona> &a){
+void borrar(ArbolBinarioOrdenadoEnlazado<int> &a){
 
   /*
     Dejamos el puntero apuntando al nodo a borrar, para 
     despues borrarlo. Siendo necesario utilizar la función
     anterior
   */
-  EscribirNodo<Persona> op;
-  Persona p;
+  EscribirNodo<int> op;
+  int p;
 
   std::cout<< BIWHITE;
   std::cout<<"\n    Borrar un nodo \n\n";
   std::cout<< RESET;
 
-  std::cout<<"\tDatos personales → \n";
+  std::cout<<"\tNumero → ";
   std::cin>>p;
   std::cout << RESET;
 
@@ -190,7 +188,7 @@ void borrar(ArbolBinarioOrdenadoEnlazado<Persona> &a){
         std::cout<<"\n  Elemento borrado\n\n  ";
         a.recorridoInOrden(op);
         std::cout<< BIBLUE;
-        std::cout<<"\n Pulse intro para volver al menú.";
+        std::cout<<"\n\n Pulse intro para volver al menú.";
         std::cin.get();
         std::cin.ignore();
         
@@ -201,7 +199,7 @@ void borrar(ArbolBinarioOrdenadoEnlazado<Persona> &a){
         std::cout<<"\tError al borrar elemento\n\n  ";
         a.recorridoInOrden(op);
         std::cout<< BIBLUE;
-        std::cout<<"\n Pulse intro para volver al menú.";
+        std::cout<<"\n\n Pulse intro para volver al menú.";
         std::cin.get();
         std::cin.ignore();
       
@@ -220,10 +218,10 @@ void borrar(ArbolBinarioOrdenadoEnlazado<Persona> &a){
 
 }
 
-void borrarArbol(ArbolBinarioOrdenadoEnlazado<Persona> &a){
+void borrarArbol(ArbolBinarioOrdenadoEnlazado<int> &a){
   
   
-  EscribirNodo<Persona> op;
+  EscribirNodo<int> op;
 
   std::cout<< BIRED;
   std::cout<<"\n    Borrar arbol\n\n";
@@ -233,10 +231,10 @@ void borrarArbol(ArbolBinarioOrdenadoEnlazado<Persona> &a){
     Borramos el arbol, despues comprobamos si ha sido
     borrado correctamente
   */
-  if(!a.estaVacio()){
+  if (!a.estaVacio()){
     a.borrarArbol();
   }
-    
+  
   if (a.estaVacio()){
     std::cout << BIGREEN;
     std::cout<<"    Arbol borrado correctamente"<<std::endl;

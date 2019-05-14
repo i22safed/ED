@@ -11,8 +11,8 @@ using namespace std;
 /*!
 \brief Espacio de nombres para la asignatura Estructura de datos.
 */
-namespace ed
-{
+namespace ed{
+
 	/*!\brief Interfaz para definir un ArbolBinario ordenado.
 
 	Define una interfaz para definir un ArbolBinarioOrdenado.
@@ -110,11 +110,11 @@ namespace ed
 					// SA Izquierdo → SA derecho → RAIZ 
 					 
 					if(this->getIzquierdo() != NULL){
-						this->getIzquierdo()->recorridoPreOrden(operador);
+						this->getIzquierdo()->recorridoPostOrden(operador);
 					}
 					
 					if(this->getDerecho() != NULL){
-						this->getDerecho()->recorridoPreOrden(operador);
+						this->getDerecho()->recorridoPostOrden(operador);
 					}
 
 					operador.aplicar(this->getInfo());
@@ -126,13 +126,13 @@ namespace ed
 					// SA Izquierdo → RAIZ → SA derecho	
 
 					if(this->getIzquierdo() != NULL){
-						this->getIzquierdo()->recorridoPreOrden(operador);
+						this->getIzquierdo()->recorridoInOrden(operador);
 					}
 					
 					operador.aplicar(this->getInfo());
 
 					if(this->getDerecho() != NULL){
-						this->getDerecho()->recorridoPreOrden(operador);
+						this->getDerecho()->recorridoInOrden(operador);
 					}
 				}
 
@@ -280,19 +280,6 @@ namespace ed
 			return insertado;
 		}
 
-		void borrarArbol(){
-
-			#ifndef NDEBUG 
-				assert(!this->estaVacio());
-			#endif 
-			
-			_raiz = NULL; 
-			
-			#ifndef NDEBUG 
-				assert(this->estaVacio());
-			#endif 
-		}
-
 		bool borrar(){
 			
 			#ifndef NDEBUG 
@@ -402,6 +389,21 @@ namespace ed
 		
 		}
 
+		void borrarArbol(){
+
+			#ifndef NDEBUG
+				assert(! this->estaVacio());
+			#endif
+
+			_raiz = NULL;
+			_actual = NULL;
+			_padre = NULL;
+
+			#ifndef NDEBUG
+				assert(this->estaVacio());
+			#endif
+		}
+
 		void recorridoPreOrden (OperadorNodo<G> &operador) const{
 			_raiz->recorridoPreOrden(operador);
 		}
@@ -463,10 +465,9 @@ namespace ed
 
 		bool estaVacio() const{
 			
-			if(_raiz == NULL){
+			if (_raiz == NULL){
 				return true;
 			}
-
 			return false;
 
 		}

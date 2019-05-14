@@ -6,31 +6,28 @@
 
 using namespace std;
 
-namespace ed
-{
+namespace ed{
 
 	template <class G_Nodo, class G_Lado>
-	class Grafo
-	{
-	private:
+	class Grafo{
+		private:
 
-		G_Lado **_lados;
+			G_Lado **_lados;
+			G_Nodo *_nodos;
 
-		G_Nodo *_nodos;
+		public:
 
-	public:
+			// constructores
+			// TODO
 
-		// constructores
-		// TODO
+			// destructor
+			// TODO
 
-		// destructor
-		// TODO
+			// funciones
+			// TODO
+			void borrarGrafo() {	// cabecera indicada para que compile
 
-		// funciones
-		// TODO
-		void borrarGrafo() {	// cabecera indicada para que compile
-
-		}
+			}
 
 	};
 }
