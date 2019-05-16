@@ -17,8 +17,12 @@ namespace ed{
 
 		public:
 
-			// constructores
-			// TODO
+			// Contructor por defecto 
+			Grafo(){};
+
+			//Constructor parametrizado 
+			Grafo(const G_Lado) 
+
 
 			// destructor
 			// TODO
