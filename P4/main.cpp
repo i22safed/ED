@@ -1,8 +1,8 @@
 #include <iostream>
-#include <cstring>
+#include <string>
 #include <cstdlib> //Para usar system
 #include <fstream> //Para trabajar con ficheros
-
+#include <vector>
 #include "grafo.hpp"
 #include "algoritmosgrafos.hpp"
 #include "funciones.hpp"
@@ -10,9 +10,10 @@
 using namespace std;
 using namespace ed;
 
+
 int main()
 {
-	Grafo<string, int> *g;
+	Grafo <string, int> g;
 	int opcion;
 	bool grafoIntroducido = false;
 
@@ -20,34 +21,110 @@ int main()
 		opcion = menu();
 		switch (opcion) {
 			case 1: // Cargar grafo desde fichero
-			if ( grafoIntroducido )
-			(*g).borrarGrafo(); // Si hay un grafo introducido se borra.
-
-			grafoIntroducido = cargarGrafo(g);
-
-			if (grafoIntroducido) {
-				cout << "Grafo cargado correctamente \n";
-				//Prueba de la asignación y del destructor
-				{
-					Grafo<string, int> g1 = *g;
+				cout << BIBLUE;
+  				cout << "  Cargar grafo desde fichero \n\n";
+  				cout << RESET;
+				if (grafoIntroducido){
+					g.borrarGrafo(); // Si hay un grafo introducido se borra.
 				}
-			}
-			else
-			cout << "Grafo no cargado \n";
 
-			getchar();
-			getchar();
-			break;
+				grafoIntroducido = cargarGrafo(g);
 
-			case 2: //Algoritmo de Floyd
-			if ( grafoIntroducido )
-				algoritmoFloyd(*g);
-			else
-				cout << "Primero tiene que introducir un grafo\n";
-			getchar();
-			getchar();
-			break;
+				if (grafoIntroducido) {
+					cout << BIGREEN;
+					cout << "\n  Grafo cargado correctamente\n";
+				}else{
+					cout << BIRED;
+					cout << "\n  Error al cargar del fichero\n";
+				}
+				cout << BIBLUE; 
+				cout << "\n  Pulse intro para volver al menu.";
+				cout << RESET;
+				getchar();
+				getchar();
+				break;
+
+			case 2: // Matriz de Recorridos
+			
+				cout << BIBLUE;
+				cout << "  Matriz de recorridos \n\n";
+				cout << RESET;
+				
+				if (grafoIntroducido){
+					recorridos(g);
+					cout << BIBLUE; 
+					cout << "\n  Pulse intro para volver al menu.";
+					cout << RESET;
+				
+				}else{
+
+					cout << BIRED; 
+					cout << "  No se ha encontrado ningun grafo\n";
+					cout << RESET; 
+					cout << BIBLUE; 
+					cout << "\n  Pulse intro para volver al menu.";
+					cout << RESET;
+				}
+				
+				getchar();
+				getchar();
+				break;
+
+			case 3: // Matriz de Distancias 
+
+				cout << BIBLUE;
+				cout << "  Matriz de distancias \n\n";
+				cout << RESET;
+				
+				if (grafoIntroducido){
+					distancias(g);
+					cout << BIBLUE; 
+					cout << "\n  Pulse intro para volver al menu.";
+					cout << RESET;
+				
+				}else{
+
+					cout << BIRED; 
+					cout << "  No se ha encontrado ningun grafo\n";
+					cout << RESET; 
+					cout << BIBLUE; 
+					cout << "\n  Pulse intro para volver al menu.";
+					cout << RESET;
+				}
+				
+				getchar();
+				getchar();
+				break;
+
+			
+			case 4: // Algoritmo Floyd
+
+				cout << BIBLUE;
+				cout << "  Algoritmo Floyd \n\n";
+				cout << RESET;
+				
+				if (grafoIntroducido){
+					algoritmoFloyd(g);
+					cout << BIBLUE; 
+					cout << "\n  Pulse intro para volver al menu.";
+					cout << RESET;
+				
+				}else{
+
+					cout << BIRED; 
+					cout << "  No se ha encontrado ningun grafo\n";
+					cout << RESET; 
+					cout << BIBLUE; 
+					cout << "\n  Pulse intro para volver al menu.";
+					cout << RESET;
+				}
+				
+				getchar();
+				getchar();
+				break;
+
 		}
+	
 	} while (opcion!=0);
 
 	return 0;
